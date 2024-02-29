@@ -74,7 +74,8 @@ module.exports = {
         text: {
           DEFAULT: '#132a39', // Light theme
           dark: '#fff5ec' // Dark theme
-        }
+        },
+        border: '#cdd5e0'
       }
     }
   },
