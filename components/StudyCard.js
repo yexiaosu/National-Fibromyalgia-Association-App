@@ -7,7 +7,11 @@ export default function StudyCard ({ navigation, study }) {
   return (
     <TouchableOpacity
       className='items-center w-11/12 border rounded-lg border-border px-0 py-4'
-      onPress={() => navigation.navigate('Details')}
+      onPress={() =>
+        navigation.navigate('Details', {
+          studyId: study.id
+        })
+      }
     >
       <Image
         className='w-11/12 h-16'

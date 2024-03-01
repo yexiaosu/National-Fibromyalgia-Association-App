@@ -15,6 +15,7 @@ export default function DashboardScreen ({ navigation }) {
 
   // studies mock data
   const studies = [{
+    id: 1,
     title: 'NFA 2007- PATIENT SURVEY',
     logoUri: 'https://www.fmaware.org/wp-content/uploads/2020/02/ACR_CMYK.png',
     participants: 2596,
