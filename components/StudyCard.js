@@ -2,6 +2,8 @@ import * as React from 'react'
 import { TouchableOpacity, View, Text, Image } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
+import { TextColor } from '../Style'
 
 export default function StudyCard ({ navigation, study }) {
   return (
@@ -24,13 +26,17 @@ export default function StudyCard ({ navigation, study }) {
         <View className='w-3/4'>
           <Text className='text-text text-base text-wrap'>{study.title}</Text>
           <View className='flex-row items-center space-x-4'>
-            <MaterialCommunityIcons
-              name='progress-clock'
-              size={22}
-              color='black'
-            />
+            {study.isOngoing ? (
+              <MaterialCommunityIcons
+                name='progress-clock'
+                size={22}
+                color={TextColor}
+              />
+            ) : (
+              <Feather name='check-circle' size={20} color={TextColor} />
+            )}
             <View className='flex-row items-center space-x-2'>
-              <MaterialIcons name='groups' size={22} color='black' />
+              <MaterialIcons name='groups' size={22} color={TextColor} />
               <Text className='text-text text-sm'>{study.participants}</Text>
             </View>
           </View>
