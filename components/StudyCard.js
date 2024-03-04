@@ -21,7 +21,7 @@ export default function StudyCard ({ navigation, study }) {
         }}
       />
       <View className='flex-row justify-between items-center w-11/12 mt-4'>
-        <View>
+        <View className='w-3/4'>
           <Text className='text-text text-base text-wrap'>{study.title}</Text>
           <View className='flex-row items-center space-x-4'>
             <MaterialCommunityIcons
