@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Button,
   Linking
 } from 'react-native'
 import FullWidthImage from 'react-native-fullwidth-image'
@@ -14,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons'
 
 import AccordionItem from '../components/Accordion'
 import Header from '../components/Header'
+import Button from '../components/Button'
 import { TextColor } from '../Style'
 
 export default function StudyDetailsScreen ({ route, navigation }) {
@@ -91,14 +91,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
             study.studyIdentifier ? study.studyIdentifier : 'not provided'
           }`}</Text>
         </AccordionItem>
-        <TouchableOpacity
-          className='p-4 mt-4 bg-primary border-0 rounded-2xl'
-          onPress={() => Linking.openURL(study.survey)}
-        >
-          <Text className='text-text-dark text-base font-medium'>
-            I'm interested!
-          </Text>
-        </TouchableOpacity>
+        <Button title="I'm interested!" onPress={() => Linking.openURL(study.survey)}/>
         <View className='w-11/12 mt-8 pb-8'>
           <Text className='text-text text-base font-medium'>
             For questions about this study, please contact:
