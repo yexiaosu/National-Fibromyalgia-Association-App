@@ -1,8 +1,10 @@
 import * as React from 'react'
-import { TouchableOpacity, View, Text, Image } from 'react-native'
+import { TouchableOpacity, View, Text } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
+import FullWidthImage from 'react-native-fullwidth-image'
+
 import { TextColor } from '../Style'
 
 export default function StudyCard ({ navigation, study }) {
@@ -15,13 +17,9 @@ export default function StudyCard ({ navigation, study }) {
         })
       }
     >
-      <Image
-        className='w-11/12 h-16'
-        resizeMode='contain'
-        source={{
-          uri: study.logoUri
-        }}
-      />
+      <View className='w-11/12'>
+        <FullWidthImage className='w-11/12' source={{ uri: study.logoUri }} />
+      </View>
       <View className='flex-row justify-between items-center w-11/12 mt-4'>
         <View className='w-3/4'>
           <Text className='text-text text-base text-wrap'>{study.title}</Text>
