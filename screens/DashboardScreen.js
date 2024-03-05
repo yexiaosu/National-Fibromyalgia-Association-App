@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
-import { Button, View, Text, Switch } from 'react-native'
-import { useColorScheme } from 'nativewind'
+import {
+  SafeAreaView,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native'
 
 import StudyCard from '../components/StudyCard'
+import Header from '../components/Header'
 
 export default function DashboardScreen ({ navigation }) {
   // dark mode test
@@ -17,7 +23,8 @@ export default function DashboardScreen ({ navigation }) {
   const studies = [
     {
       id: 1,
-      title: 'The Effect of Non-pharmacological Intervention in Fibromyalgia Syndrome',
+      title:
+        'The Effect of Non-pharmacological Intervention in Fibromyalgia Syndrome',
       logoUri:
         'https://www.fmaware.org/wp-content/uploads/2020/02/st-scholastic.jpg',
       participants: 172,
@@ -40,18 +47,33 @@ export default function DashboardScreen ({ navigation }) {
   ]
 
   return (
-    <View className='flex-1 items-center justify-center bg-background'>
-      {/* <Text>Home Screen</Text>
-      <Switch
+    <SafeAreaView className='flex-1 items-center justify-center bg-background'>
+      {/* <Switch
         trackColor={{false: '#767577', true: '#81b0ff'}}
         thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
         ios_backgroundColor="#3e3e3e"
         onValueChange={toggleSwitch}
         value={isEnabled}
       /> */}
-      {studies.map((study, idx) => (
-        <StudyCard key={idx} navigation={navigation} study={study}></StudyCard>
-      ))}
-    </View>
+      <Header title={'Dashboard'} />
+      <ScrollView
+        contentInsetAdjustmentBehavior='automatic'
+        className='flex-1 flex-col w-11/12'
+        contentContainerStyle={{
+          alignItems: 'center'
+        }}
+      >
+        {studies.map((study, idx) => (
+          <StudyCard
+            key={idx}
+            navigation={navigation}
+            study={study}
+          ></StudyCard>
+        ))}
+        <Text className='text-text font-extralight mt-4 mb-8'>
+          No more studies...
+        </Text>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
