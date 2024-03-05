@@ -17,7 +17,7 @@ export default function DashboardScreen ({ navigation }) {
   const studies = [
     {
       id: 1,
-      title: 'European League Against Rheumatism',
+      title: 'The Effect of Non-pharmacological Intervention in Fibromyalgia Syndrome',
       logoUri:
         'https://www.fmaware.org/wp-content/uploads/2020/02/st-scholastic.jpg',
       participants: 172,

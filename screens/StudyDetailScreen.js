@@ -6,12 +6,15 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Button
+  Button,
+  Linking
 } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
+import FullWidthImage from 'react-native-fullwidth-image'
+import { Ionicons } from '@expo/vector-icons'
 
 import AccordionItem from '../components/Accordion'
 import Header from '../components/Header'
+import { TextColor } from '../Style'
 
 export default function StudyDetailsScreen ({ route, navigation }) {
   const { studyId } = route.params
@@ -19,7 +22,8 @@ export default function StudyDetailsScreen ({ route, navigation }) {
   // studies mock data
   const study = {
     id: 1,
-    title: 'European League Against Rheumatism',
+    title:
+      'The Effect of Non-pharmacological Intervention in Fibromyalgia Syndrome',
     logoUri:
       'https://www.fmaware.org/wp-content/uploads/2020/02/st-scholastic.jpg',
     researchers: 'Linda Feshami, Dr. Danika Brinda',
@@ -42,10 +46,8 @@ export default function StudyDetailsScreen ({ route, navigation }) {
   }
 
   return (
-    <SafeAreaView className='flex-1 items-center justify-center'>
+    <SafeAreaView className='flex-1 items-center justify-center bg-background'>
       <Header navigation={navigation} title={'Study Details'} />
-      <Text>Details Screen for study {studyId}</Text>
-      {/* Test accordion */}
       <ScrollView
         contentInsetAdjustmentBehavior='automatic'
         className='flex-1 flex-col w-11/12'
@@ -53,6 +55,22 @@ export default function StudyDetailsScreen ({ route, navigation }) {
           alignItems: 'center'
         }}
       >
+        <View className='w-11/12 mt-4'>
+          <FullWidthImage className='w-11/12' source={{ uri: study.logoUri }} />
+        </View>
+        <View className='w-11/12 mt-2'>
+          <Text className='text-text text-xl font-medium'>{study.title}</Text>
+          <Text className='text-text text-base mt-2'>{study.researchers}</Text>
+          <Text
+            className='text-primary text-sm underline'
+            onPress={() => Linking.openURL(study.survey)}
+          >
+            Link to the survey
+          </Text>
+          <Text className='text-text text-sm font-light'>
+            {study.description}
+          </Text>
+        </View>
         <AccordionItem title='Who can participate?'>
           <Text className='text-text text-sm font-light'>
             {study.requirements}
@@ -69,9 +87,42 @@ export default function StudyDetailsScreen ({ route, navigation }) {
           </Text>
         </AccordionItem>
         <AccordionItem title='Additional Information'>
-          <Text className='text-text text-sm font-light'>
-          </Text>
+          <Text className='text-text text-sm font-light'>{`Research identifier: ${
+            study.studyIdentifier ? study.studyIdentifier : 'not provided'
+          }`}</Text>
         </AccordionItem>
+        <TouchableOpacity
+          className='p-4 mt-4 bg-primary border-0 rounded-2xl'
+          onPress={() => Linking.openURL(study.survey)}
+        >
+          <Text className='text-text-dark text-base font-medium'>
+            I'm interested!
+          </Text>
+        </TouchableOpacity>
+        <View className='w-11/12 mt-8 pb-8'>
+          <Text className='text-text text-base font-medium'>
+            For questions about this study, please contact:
+          </Text>
+          <Text className='text-text text-base mt-2'>{study.contact}</Text>
+          <View className='flex flex-row w-full items-center mt-2'>
+            <Ionicons name='call-outline' size={22} color={TextColor} />
+            <Text
+              className='text-primary underline text-sm font-light ml-2'
+              onPress={() => Linking.openURL(`tel:${study.phone}`)}
+            >
+              {study.phone}
+            </Text>
+          </View>
+          <View className='flex flex-row w-full items-center mt-2'>
+            <Ionicons name='mail-outline' size={22} color={TextColor} />
+            <Text
+              className='text-primary underline text-sm font-light ml-2'
+              onPress={() => Linking.openURL(`mailto:${study.email}`)}
+            >
+              {study.email}
+            </Text>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

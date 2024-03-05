@@ -6,7 +6,7 @@ import { TextColor } from '../Style'
 
 export default function Header ({ title, navigation }) {
   return (
-    <View className='flex flex-row w-full items-center justify-between'>
+    <View className='flex flex-row w-full items-center justify-between pb-2'>
       {navigation ? (
         <TouchableOpacity className='pl-4' onPress={() => navigation.goBack()}>
           <AntDesign name='left' size={24} color={TextColor} />
