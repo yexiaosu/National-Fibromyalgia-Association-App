@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, Image } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
 import { TextColor } from '../Style'
@@ -13,7 +13,11 @@ export default function Header ({ title, navigation }) {
         </TouchableOpacity>
       ) : (
         // placeholder
-        <View></View>
+        <Image className='ml-4' source={require('../assets/NFALogo 9.17.png')} style={{
+          width: 187.5,
+          height: 40.75,
+          resizeMode: 'contain',
+        }} />
       )}
       <Text className='text-text text-3xl mr-4'>{title ? title : ' '}</Text>
     </View>
