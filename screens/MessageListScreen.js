@@ -1,10 +1,21 @@
-import * as React from 'react';
-import { Button, View, Text } from 'react-native';
+import React from 'react'
+import { SafeAreaView, ScrollView } from 'react-native'
 
-export default function MessageListScreen({ navigation }) {
+import Header from '../components/Header'
+
+export default function MessageListScreen ({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Message!</Text>
-    </View>
-  );
+    <SafeAreaView className='flex-1 items-center justify-center bg-background'>
+      <Header title={'Messages'} />
+      <ScrollView
+        contentInsetAdjustmentBehavior='automatic'
+        className='flex-1 flex-col w-11/12'
+        contentContainerStyle={{
+          alignItems: 'center'
+        }}
+      >
+
+      </ScrollView>
+    </SafeAreaView>
+  )
 }
