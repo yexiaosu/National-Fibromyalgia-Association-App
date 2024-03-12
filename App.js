@@ -1,21 +1,31 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { AntDesign } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
+import { Provider, useDispatch } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
 
+import { rootReducer } from './data/Reducer'
 import HomeStackScreen from './screens/HomeStackScreen'
 import SettingsStackScreen from './screens/SettingsStackScreen'
 import HistoryStackScreen from './screens/HistoryStackScreen'
 import MessageStackScreen from './screens/MessageStackScreen'
 import PolicyScreen from './screens/PolicyScreen'
-import LoginScreen from './screens/LoginScreen';
-import SignUpScreen from './screens/SignUpScreen';
+import LoginScreen from './screens/LoginScreen'
+import SignUpScreen from './screens/SignUpScreen'
 import { PrimaryColor } from './Style'
 
 const Tab = createBottomTabNavigator()
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    })
+})
 
 // function App() {
 //   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -26,20 +36,23 @@ const Stack = createNativeStackNavigator();
 //   }, []);
 // }
 
-function StackNavigator() {
+function StackNavigator () {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='Login' component={LoginScreen} />
       <Stack.Screen name='Policy' component={PolicyScreen} />
       {/* <Stack.Screen name='SignUp' component={SignUpScreen} /> */}
     </Stack.Navigator>
-  );
+  )
 }
 
-function TabNavigator() {
+function TabNavigator () {
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false, tabBarActiveTintColor: PrimaryColor }}
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: PrimaryColor
+      }}
       initialRouteName='Home'
     >
       <Tab.Screen
@@ -86,11 +99,13 @@ function TabNavigator() {
   )
 }
 
-export default function App() {
+export default function App () {
   return (
-    <NavigationContainer>
-      <TabNavigator />
-      {/* <StackNavigator /> */}
-    </NavigationContainer>
-  );
+    <Provider store={store}>
+      <NavigationContainer>
+        <TabNavigator />
+        {/* <StackNavigator /> */}
+      </NavigationContainer>
+    </Provider>
+  )
 }
