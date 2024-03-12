@@ -29,8 +29,10 @@ export default function DashboardScreen ({ navigation }) {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(loadAllStudies())
-    setStudies(allStudies)
   }, [])
+  useEffect(() => {
+    setStudies(allStudies); // Update the local state when allStudies changes
+}, [allStudies]);
 
   return (
     <SafeAreaView className='flex-1 items-center justify-center bg-background'>
