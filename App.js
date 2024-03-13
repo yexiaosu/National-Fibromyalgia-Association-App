@@ -6,6 +6,8 @@ import { AntDesign } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 import { Provider, useDispatch } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 import { rootReducer } from './data/Reducer'
 import HomeStackScreen from './screens/HomeStackScreen'
@@ -102,10 +104,14 @@ function TabNavigator () {
 export default function App () {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <TabNavigator />
-        {/* <StackNavigator /> */}
-      </NavigationContainer>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
+          <NavigationContainer>
+            <TabNavigator />
+            {/* <StackNavigator /> */}
+          </NavigationContainer>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </Provider>
   )
 }
