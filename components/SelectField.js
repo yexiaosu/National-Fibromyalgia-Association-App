@@ -93,17 +93,6 @@ export default function SelectField ({
             disappearsOnIndex={-1}
           />
         )}
-        footerComponent={
-          !multiple
-            ? undefined
-            : props => (
-                <BottomSheetFooter {...props} bottomInset={bottom} style={{alignItems: 'center'}}>
-                  <View className='w-1/2'>
-                    <Button title='Filter' onPress={dismissOptions} />
-                  </View>
-                </BottomSheetFooter>
-              )
-        }
       >
         <BottomSheetFlatList
           data={options}

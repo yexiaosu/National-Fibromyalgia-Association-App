@@ -105,6 +105,7 @@ export default function DashboardScreen ({ navigation }) {
             }
             return true
           })
+          .sort((a, b) => b - a)
           .map((study, idx) => (
             <StudyCard
               key={idx}
