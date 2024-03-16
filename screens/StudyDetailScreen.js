@@ -2,14 +2,13 @@ import * as React from 'react'
 import {
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   Linking
 } from 'react-native'
 import FullWidthImage from 'react-native-fullwidth-image'
 import { Ionicons } from '@expo/vector-icons'
+import { useSelector } from 'react-redux'
 
 import AccordionItem from '../components/Accordion'
 import Header from '../components/Header'
@@ -17,33 +16,9 @@ import Button from '../components/Button'
 import { TextColor } from '../Style'
 
 export default function StudyDetailsScreen ({ route, navigation }) {
+  const allStudies = useSelector(state => state.allStudies)
   const { studyId } = route.params
-
-  // studies mock data
-  const study = {
-    id: 1,
-    title:
-      'The Effect of Non-pharmacological Intervention in Fibromyalgia Syndrome',
-    logoUri:
-      'https://www.fmaware.org/wp-content/uploads/2020/02/st-scholastic.jpg',
-    researchers: 'Linda Feshami, Dr. Danika Brinda',
-    survey:
-      'https://csscholastica.co1.qualtrics.com/jfe/form/SV_3CWsCMWkjBUDz81',
-    description:
-      'The European League Against Rheumatism (EULAR) continues to support a multidisciplinary approach, combining non-medicinal and medicinal treatments, to manage fibromyalgia. Master of Health Informatics student, Linda M. Feshami, BS, RHIT, CRC, CHC, CDIP of the College of St. Scholastica, with the collaboration of the NFA, is conducting research to determine if there is a significant difference in pain levels when a non-medicinal treatment is combined with an existing medicinal treatment.',
-    requirements:
-      'Study participants must be at least 18 years of age, diagnosed with fibromyalgia syndrome (FMS) by a health care practitioner, have experienced debilitating/life-altering pain symptoms due to FMS for a minimum of two years, and have added a non-medication treatment to an existing treatment based on medication alone.',
-    procedure:
-      'The study involves a short survey (approximately 10 min). Participants will be asked to rate pain levels at three separate points: 1) before treatment (either medicinal or non-medicinal), 2) during medicinal treatment only, and 3) medicinal combined with non-medicinal using a Likert Scale.',
-    compensation: '',
-    studyIdentifier: '',
-    relatedResearches: '',
-    videoUri: '',
-    expirationDate: '',
-    contact: 'Linda Feshami',
-    email: 'lfeshami@css.edu',
-    phone: '507-273-7764'
-  }
+  const study = allStudies.filter((s) => s.key === studyId)[0]
 
   return (
     <SafeAreaView className='flex-1 items-center justify-center bg-background'>

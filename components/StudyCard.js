@@ -13,7 +13,7 @@ export default function StudyCard ({ navigation, study }) {
       className='items-center w-11/12 border rounded-lg border-border px-0 py-4 mt-2'
       onPress={() =>
         navigation.navigate('Details', {
-          studyId: study.id
+          studyId: study.key
         })
       }
     >

@@ -85,8 +85,6 @@ export default function DashboardScreen ({ navigation }) {
       >
         {studies
           .filter(study => {
-            console.log(selectedStatus)
-            console.log(selectedTags)
             if (selectedStatus[0] === 'Active' && !study.isActive) {
               return false
             } else if (selectedStatus[0] === 'Inactive' && study.isActive) {
