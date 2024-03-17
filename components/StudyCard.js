@@ -44,7 +44,7 @@ export default function StudyCard ({ navigation, study }) {
             } border-0 rounded-2xl`}
           >
             <Text className='text-text-dark'>
-              {study.isActive ? 'recruiting' : 'recruit end'}
+              {study.isActive ? 'Recruiting' : 'Recruit End'}
             </Text>
           </View>
         </View>

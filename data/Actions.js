@@ -1,5 +1,5 @@
 import { firebaseConfig } from '../Secrets'
-import { LOAD_STUDIES } from './Reducer'
+import { LOAD_STUDIES, LOAD_PROFILE } from './Reducer'
 
 import { initializeApp } from 'firebase/app'
 import {
@@ -7,7 +7,8 @@ import {
   updateDoc,
   deleteDoc,
   getDocs,
-  doc,
+  query,
+  where,
   collection,
   getFirestore
 } from 'firebase/firestore'
@@ -37,4 +38,24 @@ const loadAllStudies = () => {
   }
 }
 
-export { loadAllStudies }
+const loadProfile = uid => {
+  return async dispatch => {
+    const ref = collection(db, 'Profile')
+    const q = query(ref, where('uid', '==', uid))
+    const querySnapshot = await getDocs(q)
+    let profile = querySnapshot.docs.map(docSnap => {
+      return {
+        ...docSnap.data()
+      }
+    })
+    console.log('loading items:', profile)
+    dispatch({
+      type: LOAD_PROFILE,
+      payload: {
+        currentProfile: profile[0]
+      }
+    })
+  }
+}
+
+export { loadAllStudies, loadProfile }
