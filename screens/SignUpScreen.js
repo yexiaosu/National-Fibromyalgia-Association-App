@@ -34,16 +34,17 @@ export default function SignUpScreen({ navigation }) {
   const [selectedValue, setSelectedValue] = useState('option1');
 
   const dispatch = useDispatch()
-
   const handleCreateAuth = async () => {
     if (!email || !password || !firstName || !lastName) {
       Alert.alert("Empty Field", "Please fill in all fields");
-      return;
+      return false; // Return false indicating sign-up failure
     }
+
     try {
       const newUser = await signUp(`${firstName} ${lastName}`, email, password);
       dispatch(addUser(newUser));
       setPassword("");
+      return true; // Return true indicating sign-up success
     } catch (error) {
       switch (error.code) {
         case "auth/invalid-email":
@@ -59,8 +60,10 @@ export default function SignUpScreen({ navigation }) {
         default:
           Alert.alert("Sign Up Error", error.message, [{ text: "OK" }]);
       }
+      return false; // Return false indicating sign-up failure
     }
   };
+
 
   return (
     <SafeAreaView className='flex-1 items-center justify-center bg-background'>
@@ -191,9 +194,11 @@ export default function SignUpScreen({ navigation }) {
         <Button
           className='w-1/5'
           title="Sign Up"
-          onPress={() => {
-            handleCreateAuth();
-            navigation.navigate('Main');
+          onPress={async () => {
+            const signUpSuccess = await handleCreateAuth();
+            if (signUpSuccess) {
+              navigation.navigate('Login');
+            }
           }}
         >
         </Button>

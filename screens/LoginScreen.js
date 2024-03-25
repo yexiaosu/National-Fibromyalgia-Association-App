@@ -46,14 +46,14 @@ export default function LoginScreen({ navigation }) {
           value={password}
           onChangeText={setPassword}
           placeholder='**********'
-          secrureTextEntry
+          secureTextEntry
           className='w-full py-2 mb-4 border-b-2 border-gray-100 text-xl'
         />
 
         <Button
           className='w-1/5'
           title="Login"
-          onPress={() => navigation.navigate('DashboardScreen')}
+          onPress={() => navigation.navigate('Main')}
         >
         </Button>
 
