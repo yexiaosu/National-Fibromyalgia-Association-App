@@ -56,8 +56,8 @@ export default function SignUpScreen({ navigation }) {
             [{ text: "OK" }]
           );
           break;
-        // default:
-        //   Alert.alert("Sign Up Error", error.message, [{ text: "OK" }]);
+        default:
+          Alert.alert("Sign Up Error", error.message, [{ text: "OK" }]);
       }
     }
   };
@@ -191,9 +191,13 @@ export default function SignUpScreen({ navigation }) {
         <Button
           className='w-1/5'
           title="Sign Up"
-          onPress={handleCreateAuth}
+          onPress={() => {
+            handleCreateAuth();
+            navigation.navigate('Main');
+          }}
         >
         </Button>
+        {console.log('email:', email)}
 
         <View className='flex items-center'>
           <Text className='mt-5 text-gray-300 text-xs'>
