@@ -50,8 +50,8 @@ export default function SignUpScreen({ navigation }) {
             [{ text: "OK" }]
           );
           break;
-        default:
-          Alert.alert("Sign Up Error", error.message, [{ text: "OK" }]);
+        // default:
+        //   Alert.alert("Sign Up Error", error.message, [{ text: "OK" }]);
       }
     }
   };
@@ -194,7 +194,7 @@ export default function SignUpScreen({ navigation }) {
             By Signing Up, you agree to our
           </Text>
           <Text
-            onPress={() => navigation.navigate('Privacy')}
+            onPress={() => navigation.navigate('Policy')}
             className='underline text-gray-300 text-xs'
           >
             Terms & Privacy Policy

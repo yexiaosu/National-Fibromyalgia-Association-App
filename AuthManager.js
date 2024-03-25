@@ -44,16 +44,16 @@ const signIn = async (email, password) => {
     await signInWithEmailAndPassword(auth, email, password);
 }
 
-// const signUp = async (email, password, dispatch) => {
-//     const userCred = await createUserWithEmailAndPassword(auth, email, password);
-//     return userCred.user;
-// };
-
-const signUp = async (displayName, email, password) => {
+const signUp = async (email, password, dispatch) => {
     const userCred = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(userCred.user, { displayName: displayName });
     return userCred.user;
-}
+};
+
+// const signUp = async (displayName, email, password) => {
+//     const userCred = await createUserWithEmailAndPassword(auth, email, password);
+//     await updateProfile(userCred.user, { displayName: displayName });
+//     return userCred.user;
+// }
 
 const signOut = async () => {
     await fbSignOut(auth);
