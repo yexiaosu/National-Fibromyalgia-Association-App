@@ -19,7 +19,7 @@ import { TextColor } from '../Style'
 import { loadAllStudies } from '../data/Actions'
 import SelectField from '../components/SelectField'
 
-export default function DashboardScreen ({ navigation }) {
+export default function DashboardScreen({ navigation }) {
   const allStudies = useSelector(state => state.allStudies)
   const [studies, setStudies] = useState([])
   const studyStatus = [

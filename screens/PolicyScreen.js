@@ -9,7 +9,7 @@ import {
 import FullWidthImage from 'react-native-fullwidth-image'
 import Header from '../components/Header'
 
-export default function DashboardScreen({ navigation }) {
+export default function PolicyScreen({ navigation }) {
   return (
     <SafeAreaView className='flex-1 items-center justify-center bg-background'>
       <Header title={'Privacy Policy'} />

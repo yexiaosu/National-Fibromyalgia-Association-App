@@ -29,26 +29,17 @@ const store = configureStore({
     })
 })
 
-// function App() {
-//   const [isSignedIn, setIsSignedIn] = useState(false);
-
-//   React.useEffect(() => {
-//     // Check if user is signed in
-//     // If signed in, setIsSignedIn(true)
-//   }, []);
-// }
-
-function StackNavigator () {
+function StackNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='Login' component={LoginScreen} />
+      <Stack.Screen name='Signup' component={SignUpScreen} />
       <Stack.Screen name='Policy' component={PolicyScreen} />
-      {/* <Stack.Screen name='SignUp' component={SignUpScreen} /> */}
     </Stack.Navigator>
   )
 }
 
-function TabNavigator () {
+function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -101,15 +92,28 @@ function TabNavigator () {
   )
 }
 
-export default function App () {
+export default function App() {
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
+
           <NavigationContainer>
-            <TabNavigator />
-            {/* <StackNavigator /> */}
+
+            <Stack.Navigator initialRouteName="Auth">
+              <Stack.Screen
+                name="Auth"
+                component={StackNavigator}
+                options={{ headerShown: false, gestureEnabled: false }}
+              />
+              <Stack.Screen
+                name="Main"
+                component={TabNavigator}
+                options={{ headerShown: false, gestureEnabled: false }}
+              />
+            </Stack.Navigator>
           </NavigationContainer>
+
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </Provider>

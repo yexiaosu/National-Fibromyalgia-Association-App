@@ -1,5 +1,5 @@
 import { firebaseConfig } from '../Secrets'
-import { LOAD_STUDIES, LOAD_PROFILE } from './Reducer'
+import { LOAD_STUDIES, LOAD_PROFILE, ADD_USER } from './Reducer'
 
 import { initializeApp } from 'firebase/app'
 import {
@@ -58,4 +58,33 @@ const loadProfile = uid => {
   }
 }
 
-export { loadAllStudies, loadProfile }
+const subscribeToUserUpdates = () => {
+  if (snapshotUnsubsribe) {
+    snapshotUnsubsribe();
+  }
+  return (dispatch) => {
+    snapshotUnsubsribe = onSnapshot(collection(db, 'users'), usersSnapshot => {
+      const updatedUsers = usersSnapshot.docs.map(uSnap => {
+        return uSnap.data(); // already has key?
+      });
+      dispatch({
+        type: LOAD_USERS,
+        payload: {
+          users: updatedUsers
+        }
+      });
+    });
+  }
+}
+
+const addUser = (user) => {
+  return async (dispatch) => {
+    userToAdd = {
+      email: user.email,
+      key: user.uid,
+    };
+    await setDoc(doc(db, "users", user.uid), userToAdd);
+  };
+};
+
+export { loadAllStudies, loadProfile, subscribeToUserUpdates, addUser }

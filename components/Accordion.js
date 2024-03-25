@@ -19,10 +19,10 @@ if (Platform.OS === 'android') {
   UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 
-export default function AccordionItem ({ children, title }) {
+export default function AccordionItem({ children, title }) {
   const [expanded, setExpanded] = useState(false)
 
-  function toggleItem () {
+  function toggleItem() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setExpanded(!expanded)
   }
