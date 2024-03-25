@@ -56,8 +56,8 @@ export default function SignUpScreen({ navigation }) {
             [{ text: "OK" }]
           );
           break;
-        // default:
-        //   Alert.alert("Sign Up Error", error.message, [{ text: "OK" }]);
+        default:
+          Alert.alert("Sign Up Error", error.message, [{ text: "OK" }]);
       }
     }
   };
