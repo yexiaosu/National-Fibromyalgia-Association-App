@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons'
 
 import { TextColor } from '../Style'
 
-export default function Header ({ title, navigation }) {
+export default function Header({ title, navigation }) {
   return (
     <View className='flex flex-row w-full items-center justify-between pb-2'>
       {navigation ? (
@@ -14,8 +14,10 @@ export default function Header ({ title, navigation }) {
       ) : (
         // placeholder
         <Image className='ml-4' source={require('../assets/NFALogo 9.17.png')} style={{
-          width: 187.5,
-          height: 40.75,
+          // width: 187.5,
+          // height: 40.75,
+          width: 138.89,
+          height: 30,
           resizeMode: 'contain',
         }} />
       )}
