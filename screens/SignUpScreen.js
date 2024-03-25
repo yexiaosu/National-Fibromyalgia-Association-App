@@ -6,12 +6,16 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Alert
 } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RadioButton } from 'react-native-paper';
 import Header from '../components/Header'
 import Button from '../components/Button';
 import InputField from '../components/InputField';
+import { signUp } from '../AuthManager';
+import { addUser } from '../data/Actions';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,13 +33,15 @@ export default function SignUpScreen({ navigation }) {
   const [isDiagnosed, setIsDiagnosed] = useState('');
   const [selectedValue, setSelectedValue] = useState('option1');
 
+  const dispatch = useDispatch()
+
   const handleCreateAuth = async () => {
-    if (!email || !password) {
+    if (!email || !password || !firstName || !lastName) {
       Alert.alert("Empty Field", "Please fill in all fields");
       return;
     }
     try {
-      const newUser = await signUp(email, password, dispatch);
+      const newUser = await signUp(`${firstName} ${lastName}`, email, password);
       dispatch(addUser(newUser));
       setPassword("");
     } catch (error) {

@@ -4,8 +4,10 @@ import { LOAD_STUDIES, LOAD_PROFILE, ADD_USER } from './Reducer'
 import { initializeApp } from 'firebase/app'
 import {
   addDoc,
+  setDoc,
   updateDoc,
   deleteDoc,
+  doc,
   getDocs,
   query,
   where,
@@ -62,8 +64,8 @@ const subscribeToUserUpdates = () => {
   if (snapshotUnsubsribe) {
     snapshotUnsubsribe();
   }
-  return (dispatch) => {
-    snapshotUnsubsribe = onSnapshot(collection(db, 'users'), usersSnapshot => {
+  return async (dispatch) => {
+    snapshotUnsubsribe = onSnapshot(collection(db, 'Profile'), usersSnapshot => {
       const updatedUsers = usersSnapshot.docs.map(uSnap => {
         return uSnap.data(); // already has key?
       });
@@ -81,9 +83,10 @@ const addUser = (user) => {
   return async (dispatch) => {
     userToAdd = {
       email: user.email,
-      key: user.uid,
+      uid: user.uid,
+      name: user.displayName
     };
-    await setDoc(doc(db, "users", user.uid), userToAdd);
+    await setDoc(doc(db, "Profile", user.uid), userToAdd);
   };
 };
 
