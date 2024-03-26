@@ -46,6 +46,9 @@ export default function SignUpScreen({ navigation }) {
         `${firstName} ${lastName}`,
         email,
         password,
+      );
+      dispatch(addUser({
+        ...newUser,
         phoneNumber,
         zipCode,
         birthday,
@@ -54,8 +57,7 @@ export default function SignUpScreen({ navigation }) {
         pastCondition,
         isDiagnosed,
         selectedValue,
-      );
-      dispatch(addUser(newUser));
+      }));
       setPassword("");
       return true; // Return true indicating sign-up success
     } catch (error) {

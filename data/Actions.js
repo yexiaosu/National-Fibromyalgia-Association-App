@@ -105,13 +105,6 @@ const addUser = (user) => {
       isDiagnosed: user.isDiagnosed || '',
       selectedValue: user.selectedValue || ''
     };
-    console.log('phoneNumber: ', user.phoneNumber)
-    console.log('zioCode: ', user.zipCode)
-    console.log('email: ', user.email)
-    console.log('birthday: ', user.birthday)
-    console.log('selectedValue: ', user.selectedValue)
-    console.log('zipCode type:', typeof zipCode)
-
     await setDoc(doc(db, "Profile", user.uid), userToAdd);
   };
 };
