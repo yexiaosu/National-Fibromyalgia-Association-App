@@ -12,7 +12,7 @@ export default function HistoryScreen ({ navigation }) {
   const [history, setHistory] = useState([])
 
   // mock data
-  const currentUid = 'dq0SkifOywwrrv1JY973'
+  const currentUid = 'NnDX6H1LWefe1rP46VoAV3Uake73'
   // the following code for getting current profile should be moved to signin/signup after the functionality is done
   const dispatch = useDispatch()
   useEffect(() => {
