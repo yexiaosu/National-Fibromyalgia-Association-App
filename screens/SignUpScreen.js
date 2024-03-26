@@ -41,7 +41,20 @@ export default function SignUpScreen({ navigation }) {
     }
 
     try {
-      const newUser = await signUp(`${firstName} ${lastName}`, email, password);
+      // const newUser = await signUp(`${firstName} ${lastName}`, email, password);
+      const newUser = await signUp(
+        `${firstName} ${lastName}`,
+        email,
+        password,
+        phoneNumber,
+        zipCode,
+        birthday,
+        gender,
+        curCondition,
+        pastCondition,
+        isDiagnosed,
+        selectedValue,
+      );
       dispatch(addUser(newUser));
       setPassword("");
       return true; // Return true indicating sign-up success
@@ -112,12 +125,12 @@ export default function SignUpScreen({ navigation }) {
           placeholder='Last Name'
         />
 
-
         <InputField
           label="Phone Number"
           value={phoneNumber}
           onChangeText={setPhoneNumber}
           placeholder='Phone Number'
+          keyboardType="phone-pad"
         />
 
         <InputField
@@ -202,7 +215,6 @@ export default function SignUpScreen({ navigation }) {
           }}
         >
         </Button>
-        {console.log('email:', email)}
 
         <View className='flex items-center'>
           <Text className='mt-5 text-gray-300 text-xs'>

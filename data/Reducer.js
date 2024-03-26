@@ -7,7 +7,7 @@ const initAllStudies = []
 const initialState = {
   allStudies: initAllStudies,
   currentProfile: {},
-  users: []
+  users: [],
 }
 
 const loadStudies = (state, studies) => {
@@ -45,6 +45,5 @@ function rootReducer(state = initialState, action) {
       return state
   }
 }
-
 
 export { rootReducer, LOAD_STUDIES, LOAD_PROFILE, ADD_USER }
