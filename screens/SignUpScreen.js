@@ -41,7 +41,6 @@ export default function SignUpScreen({ navigation }) {
     }
 
     try {
-      // const newUser = await signUp(`${firstName} ${lastName}`, email, password);
       const newUser = await signUp(
         `${firstName} ${lastName}`,
         email,
