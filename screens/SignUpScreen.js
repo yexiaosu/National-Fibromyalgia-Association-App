@@ -31,15 +31,49 @@ export default function SignUpScreen({ navigation }) {
   const [curCondition, setCurCondition] = useState('');
   const [pastCondition, setPastCondition] = useState('');
   const [isDiagnosed, setIsDiagnosed] = useState('');
-  const [selectedValue, setSelectedValue] = useState('option1');
+  const [visibility, setVisibility] = useState('AllStudyTeam');
 
   const dispatch = useDispatch()
   const handleCreateAuth = async () => {
-    if (!email || !password || !firstName || !lastName) {
-      Alert.alert("Empty Field", "Please fill in all fields");
-      return false; // Return false indicating sign-up failure
+    let emptyFields = [];
+
+    if (!email) {
+      emptyFields.push("email");
     }
 
+    if (!password) {
+      emptyFields.push("password");
+    }
+
+    if (!firstName) {
+      emptyFields.push("first name");
+    }
+
+    if (!lastName) {
+      emptyFields.push("last name");
+    }
+
+    if (!phoneNumber) {
+      emptyFields.push("phone number");
+    }
+
+    if (!zipCode) {
+      emptyFields.push("zip code");
+    }
+
+    if (!birthday) {
+      emptyFields.push("birthday");
+    }
+
+    if (!gender) {
+      emptyFields.push("gender");
+    }
+
+    if (emptyFields.length > 0) {
+      const emptyFieldsString = emptyFields.join(", ");
+      Alert.alert("Empty Fields", `Please fill in the following fields: ${emptyFieldsString}`);
+      return false; // Return false indicating sign-up failure
+    }
     try {
       const newUser = await signUp(
         `${firstName} ${lastName}`,
@@ -55,7 +89,7 @@ export default function SignUpScreen({ navigation }) {
         curCondition,
         pastCondition,
         isDiagnosed,
-        selectedValue,
+        visibility,
       }));
       setPassword("");
       return true; // Return true indicating sign-up success
@@ -88,7 +122,7 @@ export default function SignUpScreen({ navigation }) {
       >
         {/* Account Information */}
         <Text className='text-text text-xl font-semibold mt-10 mb-3'>
-          Account Information
+          Account Information (Required)
         </Text>
 
         <InputField
@@ -109,7 +143,7 @@ export default function SignUpScreen({ navigation }) {
 
         {/* Basic Information */}
         <Text className='text-text text-xl font-semibold my-3'>
-          Basic Information
+          Basic Information (Required)
         </Text>
 
         <InputField
@@ -139,6 +173,7 @@ export default function SignUpScreen({ navigation }) {
           value={zipCode}
           onChangeText={setZipCode}
           placeholder='Zip Code'
+          keyboardType="phone-pad"
         />
 
         <InputField
@@ -191,15 +226,15 @@ export default function SignUpScreen({ navigation }) {
 
         <View className="flex flex-row">
           <RadioButton.Group
-            onValueChange={(value) => setSelectedValue(value)}
-            value={selectedValue}
+            onValueChange={(value) => setVisibility(value)}
+            value={visibility}
           >
             <View className="flex flex-row items-center">
-              <RadioButton value="option1" color="#ac1e52" />
+              <RadioButton value="AllStudyTeam" color="#ac1e52" />
               <Text>All study teams</Text>
             </View>
             <View className="flex flex-row items-center">
-              <RadioButton value="option2" color="#ac1e52" />
+              <RadioButton value="OnlyInterested" color="#ac1e52" />
               <Text>Only the study teams I show interest in</Text>
             </View>
           </RadioButton.Group>

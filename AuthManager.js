@@ -54,7 +54,7 @@ const signUp = async (displayName,
     curCondition,
     pastCondition,
     isDiagnosed,
-    selectedValue) => {
+    visibility) => {
     const userCred = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(userCred.user, {
         displayName: displayName || null,
@@ -65,7 +65,7 @@ const signUp = async (displayName,
         curCondition: curCondition || null,
         pastCondition: pastCondition || null,
         isDiagnosed: isDiagnosed || null,
-        selectedValue: selectedValue || null
+        visibility: visibility || null
     });
     return userCred.user;
 };

@@ -79,17 +79,6 @@ const subscribeToUserUpdates = () => {
   }
 }
 
-// const addUser = (user) => {
-//   return async (dispatch) => {
-//     userToAdd = {
-//       email: user.email,
-//       uid: user.uid,
-//       name: user.displayName
-//     };
-//     await setDoc(doc(db, "Profile", user.uid), userToAdd);
-//   };
-// };
-
 const addUser = (user) => {
   return async (dispatch) => {
     userToAdd = {
@@ -103,7 +92,7 @@ const addUser = (user) => {
       curCondition: user.curCondition || '',
       pastCondition: user.pastCondition || '',
       isDiagnosed: user.isDiagnosed || '',
-      selectedValue: user.selectedValue || ''
+      visibility: user.visibility || ''
     };
     await setDoc(doc(db, "Profile", user.uid), userToAdd);
   };
