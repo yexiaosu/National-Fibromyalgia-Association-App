@@ -8,6 +8,8 @@ import FullWidthImage from 'react-native-fullwidth-image'
 import { TextColor } from '../Style'
 
 export default function StudyCard ({ navigation, study }) {
+  const startDate = new Date(`${study.startDate}Z`).toLocaleDateString("en-US")
+  const recruitEndDate = new Date(`${study.recruitEndDate}Z`).toLocaleDateString("en-US")
   return (
     <TouchableOpacity
       className='items-center w-11/12 border rounded-lg border-border px-0 py-4 mt-2'
@@ -22,6 +24,9 @@ export default function StudyCard ({ navigation, study }) {
       </View>
       <View className='flex-col justify-center items-begin w-11/12 mt-4'>
         <Text className='text-text text-base text-wrap'>{study.title}</Text>
+        <View className='flex-row justify-between items-center mt-1'>
+          <Text className='text-text text-sm'>{`${startDate} - ${recruitEndDate}`}</Text>
+        </View>
         <View className='flex-row justify-between items-center mt-1'>
           <View className='flex-row items-center space-x-4'>
             {study.isOngoing ? (
