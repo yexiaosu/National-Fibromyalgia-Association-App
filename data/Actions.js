@@ -25,8 +25,6 @@ const loadAllStudies = () => {
       let study = docSnap.data()
       return {
         ...docSnap.data(),
-        startDate: study.startDate.toDate(),
-        expirationDate: study.expirationDate.toDate(),
         key: docSnap.id
       }
     })
