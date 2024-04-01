@@ -13,6 +13,13 @@ export default function StudyDetailsScreen ({ route, navigation }) {
   const allStudies = useSelector(state => state.allStudies)
   const { studyId } = route.params
   const study = allStudies.filter(s => s.key === studyId)[0]
+  const startDate = new Date(`${study.startDate}Z`).toLocaleDateString('en-US')
+  const recruitEndDate = new Date(
+    `${study.recruitEndDate}Z`
+  ).toLocaleDateString('en-US')
+  const studyEndDate = study.studyEndDate
+    ? new Date(`${study.studyEndDate}Z`).toLocaleDateString('en-US')
+    : ''
 
   return (
     <SafeAreaView className='flex-1 items-center justify-center bg-background'>
@@ -84,6 +91,22 @@ export default function StudyDetailsScreen ({ route, navigation }) {
               <Text className='text-text text-sm font-light'>{`${
                 study.irbNumber ? study.irbNumber : 'not provided'
               }`}</Text>
+              <Text className='text-text text-base'>Recruit starts from: </Text>
+              <Text className='text-text text-sm font-light'>{startDate}</Text>
+              <Text className='text-text text-base'>Recruit ends on: </Text>
+              <Text className='text-text text-sm font-light'>
+                {recruitEndDate}
+              </Text>
+              {studyEndDate && (
+                <>
+                  <Text className='text-text text-base'>
+                    Study results are supposed to be published before:{' '}
+                  </Text>
+                  <Text className='text-text text-sm font-light'>
+                    {studyEndDate}
+                  </Text>
+                </>
+              )}
               {study.relatedResearch[0] && (
                 <>
                   <Text className='text-text text-base'>Related studies: </Text>
@@ -106,6 +129,22 @@ export default function StudyDetailsScreen ({ route, navigation }) {
             <Text className='text-text text-sm font-light'>{`${
               study.irbNumber ? study.irbNumber : 'not provided'
             }`}</Text>
+            <Text className='text-text text-base'>Recruit starts from: </Text>
+            <Text className='text-text text-sm font-light'>{startDate}</Text>
+            <Text className='text-text text-base'>Recruit ends on: </Text>
+            <Text className='text-text text-sm font-light'>
+              {recruitEndDate}
+            </Text>
+            {studyEndDate && (
+              <>
+                <Text className='text-text text-base'>
+                  Study results are supposed to be published before:{' '}
+                </Text>
+                <Text className='text-text text-sm font-light'>
+                  {studyEndDate}
+                </Text>
+              </>
+            )}
             {study.relatedResearch[0] && (
               <>
                 <Text className='text-text text-base'>Related studies: </Text>
