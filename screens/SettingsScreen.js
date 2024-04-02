@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Button from '../components/Button';
 import Header from '../components/Header'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { signOut } from '../AuthManager';
 
 export default function SettingsScreen({ navigation }) {
   return (
@@ -23,7 +24,14 @@ export default function SettingsScreen({ navigation }) {
         <Button
           className='w-1/5'
           title="Logout"
-        // onPress={navigation.navigate('Login')}
+          onPress={async () => {
+            try {
+              await signOut();
+              navigation.navigate('Login')
+            } catch (error) {
+              Alert.alert("Sign In Error", error.message, [{ text: "OK" }])
+            }
+          }}
         >
         </Button>
       </ScrollView>
