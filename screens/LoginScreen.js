@@ -6,12 +6,14 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Alert
 } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Header from '../components/Header'
 import SignUpScreen from './SignUpScreen'
 import Button from '../components/Button';
 import DashboardScreen from './DashboardScreen';
+import { signIn } from '../AuthManager';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,7 +55,17 @@ export default function LoginScreen({ navigation }) {
         <Button
           className='w-1/5'
           title="Login"
-          onPress={() => navigation.navigate('Main')}
+          onPress={async () => {
+            try {
+              await signIn(email, password);
+              navigation.navigate('Main');
+            } catch (error) {
+              Alert.alert(
+                "Sign In Error",
+                "Please enter valid email and password", [{ text: "OK" }])
+            }
+          }
+          }
         >
         </Button>
 
