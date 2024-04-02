@@ -79,10 +79,10 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name='Settings'
+        name='Yours'
         component={SettingsStackScreen}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: 'Yours',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name='settings-outline' size={size} color={color} />
           )
