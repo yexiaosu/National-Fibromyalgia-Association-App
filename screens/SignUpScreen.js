@@ -11,13 +11,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RadioButton, Checkbox } from 'react-native-paper'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
-import { PrimaryColor } from '../Style'
+import { PrimaryColor } from '../utility/Style'
 import Header from '../components/Header'
 import Button from '../components/Button'
 import InputField from '../components/InputField'
 import { signUp } from '../AuthManager'
 import { addUser } from '../data/Actions'
 import SelectField from '../components/SelectField'
+import { diagnosedOptions, genderOptions } from '../utility/ConstVariables'
+import { localValidate } from '../utility/LocalValidate'
 
 const Stack = createNativeStackNavigator()
 
@@ -38,16 +40,6 @@ export default function SignUpScreen ({ navigation }) {
   const [consent, setConsent] = useState(false)
   const today = new Date()
   const [date, setDate] = useState(today)
-  const genderOptions = [
-    { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' },
-    { label: 'Non-binary', value: 'non-binary' }
-  ]
-  const diagnosedOptions = [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' },
-    { label: 'Unwilling to tell', value: 'unwilling to tell' }
-  ]
   const [selectedDiagnosed, setSelectedDiagnosed] = useState([])
   const [selectedGender, setSelectedGender] = useState([])
 
@@ -59,7 +51,7 @@ export default function SignUpScreen ({ navigation }) {
 
   const dispatch = useDispatch()
   const handleCreateAuth = async () => {
-    let emptyFields = []
+    let emptyFields = localValidate(firstName, lastName, phoneNumber, zipCode, birthday, gender)
 
     if (!email) {
       emptyFields.push('email')
@@ -67,30 +59,6 @@ export default function SignUpScreen ({ navigation }) {
 
     if (!password) {
       emptyFields.push('password')
-    }
-
-    if (!firstName) {
-      emptyFields.push('first name')
-    }
-
-    if (!lastName) {
-      emptyFields.push('last name')
-    }
-
-    if (!phoneNumber) {
-      emptyFields.push('phone number')
-    }
-
-    if (!zipCode) {
-      emptyFields.push('zip code')
-    }
-
-    if (!birthday || today.toLocaleDateString('en-US') === birthday) {
-      emptyFields.push('birthday')
-    }
-
-    if (!gender) {
-      emptyFields.push('gender')
     }
 
     if (emptyFields.length > 0) {
@@ -118,6 +86,8 @@ export default function SignUpScreen ({ navigation }) {
           phoneNumber,
           zipCode,
           birthday,
+          firstName,
+          lastName,
           gender,
           curCondition,
           pastCondition,

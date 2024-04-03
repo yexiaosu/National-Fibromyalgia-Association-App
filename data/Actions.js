@@ -90,7 +90,9 @@ const addUser = (user) => {
       curCondition: user.curCondition || '',
       pastCondition: user.pastCondition || '',
       isDiagnosed: user.isDiagnosed || '',
-      visibility: user.visibility || ''
+      visibility: user.visibility || '',
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
     };
     await setDoc(doc(db, "Profile", user.uid), userToAdd);
   };

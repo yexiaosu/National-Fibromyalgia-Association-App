@@ -10,7 +10,7 @@ import {
 } from '@gorhom/bottom-sheet'
 import { ListItem } from '@rneui/themed'
 
-import { PrimaryColor, SecondaryColor, TextColor } from '../Style'
+import { PrimaryColor, SecondaryColor, TextColor } from '../utility/Style'
 
 export default function SelectField ({
   placeholder,

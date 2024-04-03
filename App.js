@@ -17,7 +17,7 @@ import MessageStackScreen from './screens/MessageStackScreen'
 import PolicyScreen from './screens/PolicyScreen'
 import LoginScreen from './screens/LoginScreen'
 import SignUpScreen from './screens/SignUpScreen'
-import { PrimaryColor } from './Style'
+import { PrimaryColor } from './utility/Style'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()

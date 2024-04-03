@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
 import FullWidthImage from 'react-native-fullwidth-image'
 
-import { TextColor } from '../Style'
+import { TextColor } from '../utility/Style'
 
 export default function StudyCard ({ navigation, study }) {
   const startDate = new Date(`${study.startDate}Z`).toLocaleDateString("en-US")

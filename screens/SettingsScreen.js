@@ -7,7 +7,7 @@ import { Avatar } from '@rneui/themed'
 import Header from '../components/Header'
 import { signOut, getAuthUser } from '../AuthManager'
 import { loadProfile } from '../data/Actions'
-import { TextColor } from '../Style'
+import { TextColor } from '../utility/Style'
 import Button from '../components/Button'
 
 export default function SettingsScreen({ navigation }) {

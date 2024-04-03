@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Text, TouchableOpacity, View, Image } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
-import { TextColor } from '../Style'
+import { TextColor } from '../utility/Style'
 
 export default function Header({ title, navigation }) {
   return (

@@ -13,7 +13,7 @@ import {
 } from 'react-native'
 import { Divider } from '@rneui/themed'
 import { FontAwesome } from '@expo/vector-icons'
-import { PrimaryColor, TextColor } from '../Style'
+import { PrimaryColor, TextColor } from '../utility/Style'
 
 if (Platform.OS === 'android') {
   UIManager.setLayoutAnimationEnabledExperimental(true)

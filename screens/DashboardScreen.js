@@ -15,7 +15,7 @@ import { BottomSheet } from '@rneui/themed'
 import StudyCard from '../components/StudyCard'
 import Header from '../components/Header'
 import Button from '../components/Button'
-import { TextColor } from '../Style'
+import { TextColor } from '../utility/Style'
 import { loadAllStudies } from '../data/Actions'
 import SelectField from '../components/SelectField'
 
