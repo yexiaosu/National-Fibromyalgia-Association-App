@@ -10,7 +10,7 @@ import { loadProfile } from '../data/Actions'
 import { TextColor } from '../Style'
 import Button from '../components/Button'
 
-export default function SettingsScreen ({ navigation }) {
+export default function SettingsScreen({ navigation }) {
   const currentProfile = useSelector(state => state.currentProfile)
 
   const dispatch = useDispatch()
@@ -102,7 +102,7 @@ export default function SettingsScreen ({ navigation }) {
               <Text className='text-text text-xl font-medium'>Settings</Text>
               <View className='flex w-full items-start justify-center mt-2'>
                 <Text className='text-text text-lg font-normal'>
-                  Current phsical conditions
+                  My profile is visible to
                 </Text>
                 <Text className='text-text text-base font-light'>
                   {currentProfile.visibility == 'AllStudyTeam'
