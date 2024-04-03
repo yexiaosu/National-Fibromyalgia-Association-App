@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  Ref,
-  useImperativeHandle,
-  useRef
-} from 'react'
+import React, { useRef } from 'react'
 import { View, TouchableOpacity, TextInput, Text } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AntDesign } from '@expo/vector-icons'
@@ -18,7 +11,6 @@ import {
 import { ListItem } from '@rneui/themed'
 
 import { PrimaryColor, SecondaryColor, TextColor } from '../Style'
-import Button from './Button'
 
 export default function SelectField ({
   placeholder,
@@ -26,6 +18,8 @@ export default function SelectField ({
   value,
   renderValue,
   onSelect,
+  containerClass='w-5/12 flex flex-col',
+  className='flex flex-row p-2 mt-1 items-center border-2 border-gray-100 rounded-md',
   multiple,
   options
 }) {
@@ -65,13 +59,13 @@ export default function SelectField ({
   return (
     <>
       <TouchableOpacity
-        className='w-5/12 flex flex-col'
+        className={containerClass}
         onPress={presentOptions}
       >
         {label && <Text>{label}</Text>}
         <View
           pointerEvents='none'
-          className='flex flex-row p-2 mt-1 items-center border border-secondary rounded-md'
+          className={className}
         >
           <TextInput
             value={valueString}
