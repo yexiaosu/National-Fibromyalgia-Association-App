@@ -269,7 +269,7 @@ export default function SignUpScreen ({ navigation }) {
         <>
           <Text>Were you diagnosed as fibromyalgia by any medical therapist?</Text>
           <SelectField
-            placeholder='Type to add'
+            placeholder='Yes or No'
             value={selectedDiagnosed}
             onSelect={value => {
               setSelectedDiagnosed(value)
@@ -305,7 +305,7 @@ export default function SignUpScreen ({ navigation }) {
 
         {/* Privacy policy */}
         <Text className='text-text text-xl font-semibold my-3'>
-          Privacy Policy (Required)
+          Privacy Policy
         </Text>
 
         <View>
@@ -337,6 +337,7 @@ export default function SignUpScreen ({ navigation }) {
               >
                 Terms & Privacy Policy
               </Text>
+              *
             </Text>
           </View>
 
@@ -349,7 +350,7 @@ export default function SignUpScreen ({ navigation }) {
               color={PrimaryColor}
             />
             <Text className='inline-block'>
-              I give consent to NFA to email and text me
+              I give consent to NFA to email and text me*
             </Text>
           </View>
         </View>
