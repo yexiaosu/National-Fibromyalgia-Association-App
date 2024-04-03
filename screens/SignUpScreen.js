@@ -10,12 +10,14 @@ import {
 } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RadioButton } from 'react-native-paper';
+import { RadioButton, Checkbox } from 'react-native-paper';
 import Header from '../components/Header'
 import Button from '../components/Button';
 import InputField from '../components/InputField';
 import { signUp } from '../AuthManager';
 import { addUser } from '../data/Actions';
+import { CheckBox } from '@rneui/themed';
+import { PrimaryColor } from '../Style'
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +34,8 @@ export default function SignUpScreen({ navigation }) {
   const [pastCondition, setPastCondition] = useState('');
   const [isDiagnosed, setIsDiagnosed] = useState('');
   const [visibility, setVisibility] = useState('AllStudyTeam');
+  const [privacy, setPrivacy] = useState(false);
+  const [consent, setConsent] = useState(false);
 
   const dispatch = useDispatch()
   const handleCreateAuth = async () => {
@@ -74,6 +78,12 @@ export default function SignUpScreen({ navigation }) {
       Alert.alert("Empty Fields", `Please fill in the following fields: ${emptyFieldsString}`);
       return false; // Return false indicating sign-up failure
     }
+
+    if (!privacy || !consent) {
+      Alert.alert("Privacy Policy", "Please accept the privacy policy and consent to continue");
+      return false; // Return false indicating sign-up failure
+    }
+
     try {
       const newUser = await signUp(
         `${firstName} ${lastName}`,
@@ -218,7 +228,7 @@ export default function SignUpScreen({ navigation }) {
           placeholder='Type to add'
         />
 
-        {/* Medical Information */}
+        {/* Profile visibility */}
         <Text
           className='text-text text-xl font-semibold my-3'>
           My profile is visible to
@@ -240,28 +250,73 @@ export default function SignUpScreen({ navigation }) {
           </RadioButton.Group>
         </View>
 
-        <Button
-          className='w-1/5'
-          title="Sign Up"
-          onPress={async () => {
-            const signUpSuccess = await handleCreateAuth();
-            if (signUpSuccess) {
-              navigation.navigate('Login');
-            }
-          }}
-        >
-        </Button>
+        {/* Privacy policy */}
+        <Text
+          className='text-text text-xl font-semibold my-3'>
+          Privacy Policy (Required)
+        </Text>
+
+        <View>
+
+          {/* <CheckBox
+            checked={privacy}
+            onPress={() => {
+              setPrivacy(!privacy);
+            }}
+            iconType="material-community"
+            checkedIcon="checkbox-outline"
+            uncheckedIcon={'checkbox-blank-outline'}
+            checkedColor={PrimaryColor}
+            title="I have read & accepted"
+          /> */}
+
+          <View className="flex flex-row items-center">
+            <Checkbox
+              status={privacy ? 'checked' : 'unchecked'}
+              onPress={() => {
+                setPrivacy(!privacy);
+              }}
+              color={PrimaryColor}
+            />
+            <Text className="inline-block">I have read & accepted {" "}
+              <Text
+                onPress={() => navigation.navigate('Policy')}
+                className='underline'
+              >
+                Terms & Privacy Policy
+              </Text>
+            </Text>
+          </View>
+
+          <View className="flex flex-row items-center">
+            <Checkbox
+              status={consent ? 'checked' : 'unchecked'}
+              onPress={() => {
+                setConsent(!consent);
+              }}
+              color={PrimaryColor}
+            />
+            <Text className="inline-block">
+              I give consent to NFA to email and text me
+            </Text>
+          </View>
+
+        </View>
+
 
         <View className='flex items-center'>
-          <Text className='mt-5 text-gray-300 text-xs'>
-            By Signing Up, you agree to our
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('Policy')}
-            className='underline text-gray-300 text-xs'
+          <Button
+            className='w-1/5'
+            title="Sign Up"
+            onPress={async () => {
+              const signUpSuccess = await handleCreateAuth();
+              if (signUpSuccess) {
+                navigation.navigate('Main');
+              }
+            }}
           >
-            Terms & Privacy Policy
-          </Text>
+          </Button>
+
           <Text
             className='mt-6 underline font-semibold'
             onPress={() => navigation.navigate('Login')}
@@ -275,4 +330,3 @@ export default function SignUpScreen({ navigation }) {
     </SafeAreaView >
   );
 }
-
