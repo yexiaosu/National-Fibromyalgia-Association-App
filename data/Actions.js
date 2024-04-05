@@ -1,5 +1,5 @@
 import { firebaseConfig } from '../Secrets'
-import { LOAD_STUDIES, LOAD_PROFILE, UPDATE_USER } from './Reducer'
+import { LOAD_STUDIES, LOAD_PROFILE, UPDATE_USER, UPDATE_HISTORY } from './Reducer'
 
 import { initializeApp } from 'firebase/app'
 import {
@@ -126,10 +126,26 @@ const updateUser = user => {
   }
 }
 
+const addStudyToHistory = (user, studyId, study) => {
+  return async dispatch => {
+    history = user.studyHistory ? [...user.studyHistory, studyId] : [studyId]
+    await updateDoc(doc(db, 'Profile', user.uid), { studyHistory: history })
+    await updateDoc(doc(db, 'Studies', studyId), { participants: study.participants + 1 })
+    dispatch({
+      type: UPDATE_HISTORY,
+      payload: {
+        user: { ...user, studyHistory: history },
+        study: { ...study, participants: study.participants + 1}
+      }
+    })
+  }
+}
+
 export {
   loadAllStudies,
   loadProfile,
   subscribeToUserUpdates,
   addUser,
-  updateUser
+  updateUser,
+  addStudyToHistory
 }

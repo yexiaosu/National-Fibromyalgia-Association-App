@@ -2,15 +2,17 @@ import * as React from 'react'
 import { SafeAreaView, ScrollView, Text, View, Linking } from 'react-native'
 import FullWidthImage from 'react-native-fullwidth-image'
 import { Ionicons } from '@expo/vector-icons'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import AccordionItem from '../components/Accordion'
 import Header from '../components/Header'
 import Button from '../components/Button'
 import { TextColor } from '../utility/Style'
+import { addStudyToHistory } from '../data/Actions'
 
 export default function StudyDetailsScreen ({ route, navigation }) {
   const allStudies = useSelector(state => state.allStudies)
+  const currentProfile = useSelector(state => state.currentProfile)
   const { studyId } = route.params
   const study = allStudies.filter(s => s.key === studyId)[0]
   const startDate = new Date(`${study.startDate}Z`).toLocaleDateString('en-US')
@@ -20,6 +22,8 @@ export default function StudyDetailsScreen ({ route, navigation }) {
   const studyEndDate = study.studyEndDate
     ? new Date(`${study.studyEndDate}Z`).toLocaleDateString('en-US')
     : ''
+
+  const dispatch = useDispatch()
 
   return (
     <SafeAreaView className='flex-1 items-center justify-center bg-background'>
@@ -120,7 +124,14 @@ export default function StudyDetailsScreen ({ route, navigation }) {
             </AccordionItem>
             <Button
               title="I'm interested!"
-              onPress={() => Linking.openURL(study.additionalLinks)}
+              onPress={() => {
+                Linking.openURL(study.additionalLinks)
+                if (!currentProfile.studyHistory || !currentProfile.studyHistory.includes(studyId)){
+                  dispatch(
+                    addStudyToHistory(currentProfile, studyId, study)
+                  )
+                }
+              }}
             />
           </>
         ) : (

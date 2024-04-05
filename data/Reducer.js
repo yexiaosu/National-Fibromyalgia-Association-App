@@ -1,6 +1,7 @@
 const LOAD_STUDIES = 'LOAD_STUDIES'
 const LOAD_PROFILE = 'LOAD_PROFILE'
 const UPDATE_USER = 'UPDATE_USER'
+const UPDATE_HISTORY = 'UPDATE_HISTORY'
 
 const initAllStudies = []
 
@@ -38,6 +39,21 @@ const updateUser = (state, user) => {
   }
 }
 
+const updateHistory = (state, user, study) => {
+  const newStudies = state.allStudies.map(s => {
+    if (s.key !== study.key) {
+      return s
+    } else {
+      return { ...study }
+    }
+  })
+  return {
+    ...state,
+    currentProfile: { ...user },
+    allStudies: newStudies
+  }
+}
+
 function rootReducer (state = initialState, action) {
   const { type, payload } = action
   switch (type) {
@@ -47,9 +63,11 @@ function rootReducer (state = initialState, action) {
       return loadProfile(state, payload.currentProfile)
     case UPDATE_USER:
       return updateUser(state, payload.user)
+    case UPDATE_HISTORY:
+      return updateHistory(state, payload.user, payload.study)
     default:
       return state
   }
 }
 
-export { rootReducer, LOAD_STUDIES, LOAD_PROFILE, UPDATE_USER }
+export { rootReducer, LOAD_STUDIES, LOAD_PROFILE, UPDATE_USER, UPDATE_HISTORY }
