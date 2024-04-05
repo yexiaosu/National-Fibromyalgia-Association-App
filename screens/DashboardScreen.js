@@ -16,8 +16,9 @@ import StudyCard from '../components/StudyCard'
 import Header from '../components/Header'
 import Button from '../components/Button'
 import { TextColor } from '../utility/Style'
-import { loadAllStudies } from '../data/Actions'
+import { loadAllStudies, loadProfile } from '../data/Actions'
 import SelectField from '../components/SelectField'
+import { getAuthUser } from '../AuthManager'
 
 export default function DashboardScreen({ navigation }) {
   const allStudies = useSelector(state => state.allStudies)
@@ -45,6 +46,8 @@ export default function DashboardScreen({ navigation }) {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(loadAllStudies())
+    const currentUid = getAuthUser().uid
+    dispatch(loadProfile(currentUid))
   }, [])
   useEffect(() => {
     setStudies(allStudies) // Update the local state when allStudies changes

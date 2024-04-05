@@ -13,12 +13,6 @@ import Button from '../components/Button'
 export default function SettingsScreen({ navigation }) {
   const currentProfile = useSelector(state => state.currentProfile)
 
-  const dispatch = useDispatch()
-  useEffect(() => {
-    const currentUid = getAuthUser().uid
-    dispatch(loadProfile(currentUid))
-  }, [])
-
   return (
     <SafeAreaView className='flex-1 items-center justify-center bg-background'>
       <Header title={'Yours'} />
@@ -32,7 +26,7 @@ export default function SettingsScreen({ navigation }) {
               <Avatar
                 size={128}
                 rounded
-                title={currentProfile.name[0]}
+                title={`${currentProfile.firstName[0]}${currentProfile.lastName[0]}`}
                 containerStyle={{ backgroundColor: '#3d4db7' }}
               />
               <Text className='text-text text-3xl font-medium mt-4'>

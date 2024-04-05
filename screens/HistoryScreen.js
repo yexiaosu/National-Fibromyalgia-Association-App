@@ -11,13 +11,6 @@ export default function HistoryScreen ({ navigation }) {
   const currentProfile = useSelector(state => state.currentProfile)
   const [history, setHistory] = useState([])
 
-  // mock data
-  const currentUid = 'NnDX6H1LWefe1rP46VoAV3Uake73'
-  // the following code for getting current profile should be moved to signin/signup after the functionality is done
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(loadProfile(currentUid))
-  }, [])
   useEffect(() => {
     if (currentProfile.studyHistory) {
       const h = allStudies.filter(s =>

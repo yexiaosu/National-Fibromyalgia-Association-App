@@ -11,15 +11,13 @@ import Header from '../components/Header'
 import Button from '../components/Button'
 import InputField from '../components/InputField'
 import { signUp } from '../AuthManager'
-import { addUser } from '../data/Actions'
+import { addUser, updateUser } from '../data/Actions'
 import SelectField from '../components/SelectField'
 import { diagnosedOptions, genderOptions } from '../utility/ConstVariables'
 import { localValidate } from '../utility/LocalValidate'
 
 export default function SettingsEditScreen ({ route, navigation }) {
   const currentProfile = useSelector(state => state.currentProfile)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState(currentProfile.firstName)
   const [lastName, setLastName] = useState(currentProfile.lastName)
   const [phoneNumber, setPhoneNumber] = useState(currentProfile.phoneNumber)
@@ -35,8 +33,10 @@ export default function SettingsEditScreen ({ route, navigation }) {
   const today = new Date()
   const dates = currentProfile.birthday.split('/')
   const [date, setDate] = useState(new Date(dates[2], dates[0] - 1, dates[1]))
-  
-  const [selectedDiagnosed, setSelectedDiagnosed] = useState([currentProfile.isDiagnosed])
+
+  const [selectedDiagnosed, setSelectedDiagnosed] = useState([
+    currentProfile.isDiagnosed
+  ])
   const [selectedGender, setSelectedGender] = useState([currentProfile.gender])
 
   const onChange = (event, selectedDate) => {
@@ -47,7 +47,14 @@ export default function SettingsEditScreen ({ route, navigation }) {
 
   const dispatch = useDispatch()
   const handleEditProfile = async () => {
-    let emptyFields = localValidate(firstName, lastName, phoneNumber, zipCode, birthday, gender)
+    let emptyFields = localValidate(
+      firstName,
+      lastName,
+      phoneNumber,
+      zipCode,
+      birthday,
+      gender
+    )
 
     if (emptyFields.length > 0) {
       const emptyFieldsString = emptyFields.join(', ')
@@ -59,37 +66,26 @@ export default function SettingsEditScreen ({ route, navigation }) {
     }
 
     try {
-      const newUser = await signUp(`${firstName} ${lastName}`, email, password)
       dispatch(
-        addUser({
-          ...newUser,
-          phoneNumber,
-          zipCode,
-          birthday,
-          gender,
-          curCondition,
-          pastCondition,
-          isDiagnosed,
-          visibility
+        updateUser({
+          uid: currentProfile.uid,
+          email: currentProfile.email     ,
+          firstName: firstName,
+          lastName: lastName,
+          name: `${firstName} ${lastName}`,
+          phoneNumber: phoneNumber,
+          zipCode: zipCode,
+          birthday: birthday,
+          gender: gender,
+          curCondition: curCondition,
+          pastCondition: pastCondition,
+          isDiagnosed: isDiagnosed,
+          visibility: visibility
         })
       )
-      setPassword('')
       return true // Return true indicating sign-up success
     } catch (error) {
-      switch (error.code) {
-        case 'auth/invalid-email':
-          Alert.alert('Sign Up Error', 'Invalid email', [{ text: 'OK' }])
-          break
-        case 'auth/weak-password':
-          Alert.alert(
-            'Sign Up Error',
-            'Password should be at least 6 characters',
-            [{ text: 'OK' }]
-          )
-          break
-        default:
-          Alert.alert('Sign Up Error', error.message, [{ text: 'OK' }])
-      }
+      console.log(error)
       return false // Return false indicating sign-up failure
     }
   }
@@ -230,14 +226,13 @@ export default function SettingsEditScreen ({ route, navigation }) {
           </RadioButton.Group>
         </View>
 
-        <View className='flex items-center'>
+        <View className='flex self-center w-1/2'>
           <Button
-            className='w-1/5'
-            title='Sign Up'
+            title='Save'
             onPress={async () => {
               const signUpSuccess = await handleEditProfile()
               if (signUpSuccess) {
-                navigation.navigate('Main')
+                navigation.goBack()
               }
             }}
           ></Button>

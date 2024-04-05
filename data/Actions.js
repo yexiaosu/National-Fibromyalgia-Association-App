@@ -1,5 +1,5 @@
 import { firebaseConfig } from '../Secrets'
-import { LOAD_STUDIES, LOAD_PROFILE, ADD_USER } from './Reducer'
+import { LOAD_STUDIES, LOAD_PROFILE, UPDATE_USER } from './Reducer'
 
 import { initializeApp } from 'firebase/app'
 import {
@@ -60,25 +60,28 @@ const loadProfile = uid => {
 
 const subscribeToUserUpdates = () => {
   if (snapshotUnsubsribe) {
-    snapshotUnsubsribe();
+    snapshotUnsubsribe()
   }
-  return async (dispatch) => {
-    snapshotUnsubsribe = onSnapshot(collection(db, 'Profile'), usersSnapshot => {
-      const updatedUsers = usersSnapshot.docs.map(uSnap => {
-        return uSnap.data();
-      });
-      dispatch({
-        type: LOAD_PROFILE,
-        payload: {
-          users: updatedUsers
-        }
-      });
-    });
+  return async dispatch => {
+    snapshotUnsubsribe = onSnapshot(
+      collection(db, 'Profile'),
+      usersSnapshot => {
+        const updatedUsers = usersSnapshot.docs.map(uSnap => {
+          return uSnap.data()
+        })
+        dispatch({
+          type: LOAD_PROFILE,
+          payload: {
+            users: updatedUsers
+          }
+        })
+      }
+    )
   }
 }
 
-const addUser = (user) => {
-  return async (dispatch) => {
+const addUser = user => {
+  return async dispatch => {
     userToAdd = {
       email: user.email || '',
       uid: user.uid || '',
@@ -92,10 +95,41 @@ const addUser = (user) => {
       isDiagnosed: user.isDiagnosed || '',
       visibility: user.visibility || '',
       firstName: user.firstName || '',
-      lastName: user.lastName || '',
-    };
-    await setDoc(doc(db, "Profile", user.uid), userToAdd);
-  };
-};
+      lastName: user.lastName || ''
+    }
+    await setDoc(doc(db, 'Profile', user.uid), userToAdd)
+  }
+}
 
-export { loadAllStudies, loadProfile, subscribeToUserUpdates, addUser }
+const updateUser = user => {
+  return async dispatch => {
+    userToUpdate = {
+      name: user.name || '',
+      phoneNumber: user.phoneNumber || '',
+      zipCode: user.zipCode || '',
+      birthday: user.birthday || '',
+      gender: user.gender || '',
+      curCondition: user.curCondition || '',
+      pastCondition: user.pastCondition || '',
+      isDiagnosed: user.isDiagnosed || '',
+      visibility: user.visibility || '',
+      firstName: user.firstName || '',
+      lastName: user.lastName || ''
+    }
+    await updateDoc(doc(db, 'Profile', user.uid), userToUpdate)
+    dispatch({
+      type: UPDATE_USER,
+      payload: {
+        user: user
+      }
+    })
+  }
+}
+
+export {
+  loadAllStudies,
+  loadProfile,
+  subscribeToUserUpdates,
+  addUser,
+  updateUser
+}
