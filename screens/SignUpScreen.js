@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
-import {
-  SafeAreaView,
-  View,
-  Text,
-  ScrollView,
-  Alert
-} from 'react-native'
+import { SafeAreaView, View, Text, ScrollView, Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RadioButton, Checkbox } from 'react-native-paper'
@@ -51,7 +45,14 @@ export default function SignUpScreen ({ navigation }) {
 
   const dispatch = useDispatch()
   const handleCreateAuth = async () => {
-    let emptyFields = localValidate(firstName, lastName, phoneNumber, zipCode, birthday, gender)
+    let emptyFields = localValidate(
+      firstName,
+      lastName,
+      phoneNumber,
+      zipCode,
+      birthday,
+      gender
+    )
 
     if (!email) {
       emptyFields.push('email')
@@ -237,7 +238,9 @@ export default function SignUpScreen ({ navigation }) {
         />
 
         <>
-          <Text>Were you diagnosed as fibromyalgia by any medical therapist?</Text>
+          <Text>
+            Were you diagnosed as fibromyalgia by any medical therapist?
+          </Text>
           <SelectField
             placeholder='Yes or No'
             value={selectedDiagnosed}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import {
   SafeAreaView,
   View,
@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { useColorScheme } from 'nativewind'
+import RadioGroup from 'react-native-radio-buttons-group'
 import { Ionicons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import { BottomSheet } from '@rneui/themed'
@@ -16,24 +17,20 @@ import StudyCard from '../components/StudyCard'
 import Header from '../components/Header'
 import Button from '../components/Button'
 import { TextColor } from '../utility/Style'
-import { loadAllStudies, loadProfile } from '../data/Actions'
+import { loadAllStudies, loadProfile, loadTags } from '../data/Actions'
 import SelectField from '../components/SelectField'
 import { getAuthUser } from '../AuthManager'
+import { loadConditionTags, studyStatus } from '../utility/ConstVariables'
 
-export default function DashboardScreen({ navigation }) {
+export default function DashboardScreen ({ navigation }) {
   const allStudies = useSelector(state => state.allStudies)
   const [studies, setStudies] = useState([])
-  const studyStatus = [
-    { label: 'Active', value: 'Active' },
-    { label: 'Inactive', value: 'Inactive' },
-    { label: 'All', value: 'All' }
-  ]
-  const tags = [
-    { label: 'Surveys', value: 'survey' },
-    { label: 'Clinical Trials', value: 'clinical' }
-  ]
-  const [selectedTags, setSelectedTags] = useState([])
-  const [selectedStatus, setSelectedStatus] = useState([])
+  const radioButtons = useMemo(() => studyStatus, [])
+  const [conditions, setConditions] = useState([])
+  const [topics, setTopics] = useState([])
+  const [selectedConditions, setSelectedConditions] = useState([])
+  const [selectedTopics, setSelectedTopics] = useState([])
+  const [selectedStatus, setSelectedStatus] = useState('3')
 
   // dark mode test
   // const [isEnabled, setIsEnabled] = useState(false);
@@ -46,12 +43,24 @@ export default function DashboardScreen({ navigation }) {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(loadAllStudies())
+    loadTags().then(v => {
+      const c = []
+      const t = []
+      for (const [key, value] of Object.entries(v.conditions)) {
+        c.push({ label: value, value: value })
+      }
+      for (const [key, value] of Object.entries(v.topics)) {
+        t.push({ label: value, value: value })
+      }
+      setConditions(c)
+      setTopics(t)
+    })
     const currentUid = getAuthUser().uid
     dispatch(loadProfile(currentUid))
   }, [])
   useEffect(() => {
     setStudies(allStudies) // Update the local state when allStudies changes
-  }, [allStudies])
+  }, [allStudies, conditions, topics])
 
   return (
     <SafeAreaView className='flex-1 items-center justify-center bg-background'>
@@ -64,21 +73,34 @@ export default function DashboardScreen({ navigation }) {
       /> */}
       <Header title={'Dashboard'} />
       <View className='flex flex-row w-full justify-evenly mb-2'>
-        <SelectField
+        {/* <SelectField
           placeholder='Select status...'
           value={selectedStatus}
           onSelect={setSelectedStatus}
           options={studyStatus}
           multiple={false}
+        /> */}
+        <SelectField
+          placeholder='Conditions...'
+          value={selectedConditions}
+          onSelect={setSelectedConditions}
+          options={conditions}
+          multiple={true}
         />
         <SelectField
-          placeholder='Select tags...'
-          value={selectedTags}
-          onSelect={setSelectedTags}
-          options={tags}
+          placeholder='Topics...'
+          value={selectedTopics}
+          onSelect={setSelectedTopics}
+          options={topics}
           multiple={true}
         />
       </View>
+      <RadioGroup
+        radioButtons={radioButtons}
+        onPress={setSelectedStatus}
+        selectedId={selectedStatus}
+        layout='row'
+      />
       <ScrollView
         contentInsetAdjustmentBehavior='automatic'
         className='flex-1 flex-col w-11/12'
@@ -88,17 +110,35 @@ export default function DashboardScreen({ navigation }) {
       >
         {studies
           .filter(study => {
-            if (selectedStatus[0] === 'Active' && !study.isActive) {
+            // status
+            if (selectedStatus === '1' && !study.isActive) {
               return false
-            } else if (selectedStatus[0] === 'Inactive' && study.isActive) {
+            } else if (selectedStatus === '2' && study.isActive) {
               return false
             }
-            if (selectedTags.length > 0) {
+            // conditions
+            if (selectedConditions.length > 0) {
               let flag = false
-              study.tags.forEach(element => {
-                if (selectedTags.includes(element)) {
+              study.researchTopics.conditions.every(element => {
+                if (selectedConditions.includes(element)) {
                   flag = true
+                  return false // break the iteration
                 }
+                return true
+              })
+              if (flag === false) {
+                return false
+              }
+            }
+            // topics
+            if (selectedTopics.length > 0) {
+              let flag = false
+              study.researchTopics.topics.every(element => {
+                if (selectedTopics.includes(element)) {
+                  flag = true
+                  return false // break the iteration
+                }
+                return true
               })
               if (flag === false) {
                 return false

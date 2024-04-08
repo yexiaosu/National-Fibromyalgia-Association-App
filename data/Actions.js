@@ -1,5 +1,11 @@
 import { firebaseConfig } from '../Secrets'
-import { LOAD_STUDIES, LOAD_PROFILE, UPDATE_USER, UPDATE_HISTORY } from './Reducer'
+import {
+  LOAD_STUDIES,
+  LOAD_PROFILE,
+  UPDATE_USER,
+  UPDATE_HISTORY,
+  LOAD_TAGS
+} from './Reducer'
 
 import { initializeApp } from 'firebase/app'
 import {
@@ -22,7 +28,6 @@ const loadAllStudies = () => {
   return async dispatch => {
     let querySnapshot = await getDocs(collection(db, 'Studies'))
     let studies = querySnapshot.docs.map(docSnap => {
-      let study = docSnap.data()
       return {
         ...docSnap.data(),
         key: docSnap.id
@@ -56,6 +61,25 @@ const loadProfile = uid => {
       }
     })
   }
+}
+
+const loadTags = async () => {
+  let querySnapshot = await getDocs(collection(db, 'Tags'))
+  let allTags = {}
+  querySnapshot.docs.forEach(docSnap => {
+    if (docSnap.id === 'conditions') {
+      allTags.conditions = {
+        ...docSnap.data()
+      }
+    }
+    if (docSnap.id === 'topics') {
+      allTags.topics = {
+        ...docSnap.data()
+      }
+    }
+  })
+  console.log('loading items:', allTags)
+  return allTags
 }
 
 const subscribeToUserUpdates = () => {
@@ -130,12 +154,14 @@ const addStudyToHistory = (user, studyId, study) => {
   return async dispatch => {
     history = user.studyHistory ? [...user.studyHistory, studyId] : [studyId]
     await updateDoc(doc(db, 'Profile', user.uid), { studyHistory: history })
-    await updateDoc(doc(db, 'Studies', studyId), { participants: study.participants + 1 })
+    await updateDoc(doc(db, 'Studies', studyId), {
+      participants: study.participants + 1
+    })
     dispatch({
       type: UPDATE_HISTORY,
       payload: {
         user: { ...user, studyHistory: history },
-        study: { ...study, participants: study.participants + 1}
+        study: { ...study, participants: study.participants + 1 }
       }
     })
   }
@@ -143,6 +169,7 @@ const addStudyToHistory = (user, studyId, study) => {
 
 export {
   loadAllStudies,
+  loadTags,
   loadProfile,
   subscribeToUserUpdates,
   addUser,
