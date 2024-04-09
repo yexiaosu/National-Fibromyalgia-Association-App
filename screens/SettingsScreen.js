@@ -73,7 +73,7 @@ export default function SettingsScreen({ navigation }) {
               </View>
               <View className='flex w-full items-start justify-center mt-2'>
                 <Text className='text-text text-lg font-normal'>
-                  Past phsical conditions
+                  Past physical conditions
                 </Text>
                 <Text className='text-text text-base font-light'>
                   {currentProfile.pastCondition
@@ -83,7 +83,7 @@ export default function SettingsScreen({ navigation }) {
               </View>
               <View className='flex w-full items-start justify-center mt-2'>
                 <Text className='text-text text-lg font-normal'>
-                  Current phsical conditions
+                  Current physical conditions
                 </Text>
                 <Text className='text-text text-base font-light'>
                   {currentProfile.curCondition

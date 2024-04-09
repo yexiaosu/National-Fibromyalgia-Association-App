@@ -17,7 +17,7 @@ import { localValidate } from '../utility/LocalValidate'
 
 const Stack = createNativeStackNavigator()
 
-export default function SignUpScreen ({ navigation }) {
+export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
@@ -282,18 +282,6 @@ export default function SignUpScreen ({ navigation }) {
         </Text>
 
         <View>
-          {/* <CheckBox
-            checked={privacy}
-            onPress={() => {
-              setPrivacy(!privacy);
-            }}
-            iconType="material-community"
-            checkedIcon="checkbox-outline"
-            uncheckedIcon={'checkbox-blank-outline'}
-            checkedColor={PrimaryColor}
-            title="I have read & accepted"
-          /> */}
-
           <View className='flex flex-row items-center'>
             <Checkbox
               status={privacy ? 'checked' : 'unchecked'}
