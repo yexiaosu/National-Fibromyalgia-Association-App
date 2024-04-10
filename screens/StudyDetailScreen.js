@@ -22,6 +22,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
   const studyEndDate = study.studyEndDate
     ? new Date(`${study.studyEndDate}Z`).toLocaleDateString('en-US')
     : ''
+  const today = new Date()
 
   const dispatch = useDispatch()
 
@@ -91,13 +92,17 @@ export default function StudyDetailsScreen ({ route, navigation }) {
               </Text>
             </AccordionItem>
             <AccordionItem title='Additional Information'>
-              <Text className='text-text text-base'>Research identifier: </Text>
+              <Text className='text-text text-base'>IRB Number: </Text>
               <Text className='text-text text-sm font-light'>{`${
                 study.irbNumber ? study.irbNumber : 'not provided'
               }`}</Text>
-              <Text className='text-text text-base'>Recruit starts from: </Text>
+              <Text className='text-text text-base'>{`Recruitment ${
+                startDate > today ? 'will start' : 'started'
+              } from: `}</Text>
               <Text className='text-text text-sm font-light'>{startDate}</Text>
-              <Text className='text-text text-base'>Recruit ends on: </Text>
+              <Text className='text-text text-base'>{`Recruitment ${
+                recruitEndDate > today ? 'will end' : 'ended'
+              } on: `}</Text>
               <Text className='text-text text-sm font-light'>
                 {recruitEndDate}
               </Text>
@@ -114,11 +119,15 @@ export default function StudyDetailsScreen ({ route, navigation }) {
               {study.relatedResearch[0] && (
                 <>
                   <Text className='text-text text-base'>Related studies: </Text>
-                  <Text className='text-text text-sm font-light'>{`${
-                    study.relatedResearch[0]
-                      ? study.studyIdentifier
-                      : 'not provided'
-                  }`}</Text>
+                  {study.relatedResearch.map((s, idx) => (
+                    <Text
+                      key={idx}
+                      className='text-primary text-sm underline font-light'
+                      onPress={() => Linking.openURL(s)}
+                    >
+                      {s}
+                    </Text>
+                  ))}
                 </>
               )}
             </AccordionItem>
@@ -126,23 +135,28 @@ export default function StudyDetailsScreen ({ route, navigation }) {
               title="I'm interested!"
               onPress={() => {
                 Linking.openURL(study.additionalLinks)
-                if (!currentProfile.studyHistory || !currentProfile.studyHistory.includes(studyId)){
-                  dispatch(
-                    addStudyToHistory(currentProfile, studyId, study)
-                  )
+                if (
+                  !currentProfile.studyHistory ||
+                  !currentProfile.studyHistory.includes(studyId)
+                ) {
+                  dispatch(addStudyToHistory(currentProfile, studyId, study))
                 }
               }}
             />
           </>
         ) : (
           <View className='w-11/12 mt-2'>
-            <Text className='text-text text-base'>Research identifier: </Text>
+            <Text className='text-text text-base'>IRB Number: </Text>
             <Text className='text-text text-sm font-light'>{`${
               study.irbNumber ? study.irbNumber : 'not provided'
             }`}</Text>
-            <Text className='text-text text-base'>Recruit starts from: </Text>
+            <Text className='text-text text-base'>{`Recruitment ${
+              startDate > today ? 'will start' : 'started'
+            } from: `}</Text>
             <Text className='text-text text-sm font-light'>{startDate}</Text>
-            <Text className='text-text text-base'>Recruit ends on: </Text>
+            <Text className='text-text text-base'>{`Recruitment ${
+              recruitEndDate > today ? 'will end' : 'ended'
+            } on: `}</Text>
             <Text className='text-text text-sm font-light'>
               {recruitEndDate}
             </Text>
@@ -170,9 +184,9 @@ export default function StudyDetailsScreen ({ route, navigation }) {
                 ))}
               </>
             )}
-            <View className='p-4 mt-4 w-1/2 bg-disabled border-0 rounded-2xl items-center self-center'>
+            <View className='p-4 mt-4 bg-disabled border-0 rounded-2xl items-center self-center'>
               <Text className='text-text-dark text-base font-medium'>
-                Recruit End
+                Recruiting Ended
               </Text>
             </View>
           </View>

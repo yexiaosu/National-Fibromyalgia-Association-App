@@ -49,7 +49,7 @@ export default function StudyCard ({ navigation, study }) {
             } border-0 rounded-2xl`}
           >
             <Text className='text-text-dark'>
-              {study.isActive ? 'Recruiting' : 'Recruit End'}
+              {study.isActive ? 'Recruiting' : 'Recruiting Ended'}
             </Text>
           </View>
         </View>
