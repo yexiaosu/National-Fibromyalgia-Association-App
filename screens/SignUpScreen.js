@@ -239,7 +239,7 @@ export default function SignUpScreen({ navigation }) {
 
         <>
           <Text>
-            Were you diagnosed as fibromyalgia by any medical therapist?
+            Were you diagnosed with fibromyalgia by any medical therapist?
           </Text>
           <SelectField
             placeholder='Yes or No'

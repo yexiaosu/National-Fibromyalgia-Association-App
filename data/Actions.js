@@ -83,11 +83,11 @@ const loadTags = async () => {
 }
 
 const subscribeToUserUpdates = () => {
-  if (snapshotUnsubsribe) {
-    snapshotUnsubsribe()
+  if (snapshotUnsubscribe) {
+    snapshotUnsubscribe()
   }
   return async dispatch => {
-    snapshotUnsubsribe = onSnapshot(
+    snapshotUnsubscribe = onSnapshot(
       collection(db, 'Profile'),
       usersSnapshot => {
         const updatedUsers = usersSnapshot.docs.map(uSnap => {

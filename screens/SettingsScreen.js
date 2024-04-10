@@ -63,7 +63,7 @@ export default function SettingsScreen({ navigation }) {
               </View>
               <View className='flex flex-row w-full items-center justify-between mt-2'>
                 <Text className='text-text text-lg font-normal'>
-                  Diagnosed as fibromyalgia
+                  Diagnosed with fibromyalgia
                 </Text>
                 <Text className='text-text text-base font-light'>
                   {currentProfile.isDiagnosed

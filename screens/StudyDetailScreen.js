@@ -73,7 +73,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
                 </>
               )}
             </AccordionItem>
-            <AccordionItem title='What is invovled?'>
+            <AccordionItem title='What is involved?'>
               <Text className='text-text text-sm font-light'>
                 {study.procedure}
               </Text>
