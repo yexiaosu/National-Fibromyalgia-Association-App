@@ -8,8 +8,9 @@ import FullWidthImage from 'react-native-fullwidth-image'
 import { TextColor } from '../utility/Style'
 
 export default function StudyCard ({ navigation, study }) {
-  const startDate = new Date(`${study.startDate}Z`).toLocaleDateString("en-US")
-  const recruitEndDate = new Date(`${study.recruitEndDate}Z`).toLocaleDateString("en-US")
+  console.log(study.startDate, study.recruitEndDate)
+  const startDate = new Date(`${study.startDate}T23:59:59Z`).toLocaleDateString("en-US")
+  const recruitEndDate = new Date(`${study.recruitEndDate}T23:59:59Z`).toLocaleDateString("en-US")
   return (
     <TouchableOpacity
       className='items-center w-11/12 border rounded-lg border-border px-0 py-4 mt-2'
@@ -19,11 +20,11 @@ export default function StudyCard ({ navigation, study }) {
         })
       }
     >
-      <View className='w-11/12'>
+      {study.logoUri && <View className='w-11/12'>
         <FullWidthImage className='w-11/12' source={{ uri: study.logoUri }} />
-      </View>
+      </View>}
       <View className='flex-col justify-center items-begin w-11/12 mt-4'>
-        <Text className='text-text text-base text-wrap'>{study.title}</Text>
+        <Text className='text-text text-base text-wrap'>{study.title ? study.title : 'No title'}</Text>
         <View className='flex-row justify-between items-center mt-1'>
           <Text className='text-text text-sm'>{`${startDate} - ${recruitEndDate}`}</Text>
         </View>
