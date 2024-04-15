@@ -15,12 +15,12 @@ export default function StudyDetailsScreen ({ route, navigation }) {
   const currentProfile = useSelector(state => state.currentProfile)
   const { studyId } = route.params
   const study = allStudies.filter(s => s.key === studyId)[0]
-  const startDate = new Date(`${study.startDate}Z`).toLocaleDateString('en-US')
+  const startDate = new Date(`${study.startDate}T23:59:59Z`).toLocaleDateString('en-US')
   const recruitEndDate = new Date(
-    `${study.recruitEndDate}Z`
+    `${study.recruitEndDate}T23:59:59Z`
   ).toLocaleDateString('en-US')
   const studyEndDate = study.studyEndDate
-    ? new Date(`${study.studyEndDate}Z`).toLocaleDateString('en-US')
+    ? new Date(`${study.studyEndDate}T23:59:59Z`).toLocaleDateString('en-US')
     : ''
   const today = new Date()
 
@@ -36,9 +36,14 @@ export default function StudyDetailsScreen ({ route, navigation }) {
           alignItems: 'center'
         }}
       >
-        <View className='w-11/12 mt-4'>
-          <FullWidthImage className='w-11/12' source={{ uri: study.logoUri }} />
-        </View>
+        {study.logoUri && (
+          <View className='w-11/12 mt-4'>
+            <FullWidthImage
+              className='w-11/12'
+              source={{ uri: study.logoUri }}
+            />
+          </View>
+        )}
         <View className='w-11/12 mt-2'>
           <Text className='text-text text-xl font-medium'>{study.title}</Text>
           <Text className='text-text text-base mt-2'>{study.researchers}</Text>
