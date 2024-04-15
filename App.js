@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { AntDesign } from '@expo/vector-icons'
-import { Ionicons } from '@expo/vector-icons'
-import { Provider, useDispatch } from 'react-redux'
+import { Feather } from '@expo/vector-icons'
+import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -13,7 +13,7 @@ import { rootReducer } from './data/Reducer'
 import HomeStackScreen from './screens/HomeStackScreen'
 import SettingsStackScreen from './screens/SettingsStackScreen'
 import HistoryStackScreen from './screens/HistoryStackScreen'
-import MessageStackScreen from './screens/MessageStackScreen'
+// import MessageStackScreen from './screens/MessageStackScreen'
 import PolicyScreen from './screens/PolicyScreen'
 import LoginScreen from './screens/LoginScreen'
 import SignUpScreen from './screens/SignUpScreen'
@@ -29,7 +29,7 @@ const store = configureStore({
     })
 })
 
-function StackNavigator() {
+function StackNavigator () {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='Login' component={LoginScreen} />
@@ -39,7 +39,7 @@ function StackNavigator() {
   )
 }
 
-function TabNavigator() {
+function TabNavigator () {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -68,7 +68,7 @@ function TabNavigator() {
           )
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name='Messages'
         component={MessageStackScreen}
         options={{
@@ -77,14 +77,14 @@ function TabNavigator() {
             <AntDesign name='message1' size={size} color={color} />
           )
         }}
-      />
+      /> */}
       <Tab.Screen
         name='Yours'
         component={SettingsStackScreen}
         options={{
           tabBarLabel: 'Yours',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name='settings-outline' size={size} color={color} />
+            <Feather name='user' size={size} color={color} />
           )
         }}
       />
@@ -92,28 +92,25 @@ function TabNavigator() {
   )
 }
 
-export default function App() {
+export default function App () {
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
-
           <NavigationContainer>
-
-            <Stack.Navigator initialRouteName="Auth">
+            <Stack.Navigator initialRouteName='Auth'>
               <Stack.Screen
-                name="Auth"
+                name='Auth'
                 component={StackNavigator}
                 options={{ headerShown: false, gestureEnabled: false }}
               />
               <Stack.Screen
-                name="Main"
+                name='Main'
                 component={TabNavigator}
                 options={{ headerShown: false, gestureEnabled: false }}
               />
             </Stack.Navigator>
           </NavigationContainer>
-
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </Provider>
