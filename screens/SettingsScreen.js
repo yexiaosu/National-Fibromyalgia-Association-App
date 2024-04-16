@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, ScrollView, SafeAreaView } from 'react-native'
+import { View, Text, ScrollView, SafeAreaView, Linking } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { Avatar } from '@rneui/themed'
@@ -105,6 +105,22 @@ export default function SettingsScreen({ navigation }) {
                 </Text>
               </View>
             </View>
+
+            <View className='w-11/12 mt-2'>
+              <Text className='text-text text-xl font-medium'>About</Text>
+              <View className='flex w-full items-start justify-center mt-2'>
+                <Text className='text-text text-base font-light'>
+                  Learn more information about Fibromyalgia on our website!
+                </Text>
+                <Text
+                  className='text-primary text-sm underline'
+                  onPress={() => Linking.openURL('https://www.fmaware.org/')}
+                >
+                  Direct to the website.
+                </Text>
+              </View>
+            </View>
+
             <View className='pb-8 w-3/4 self-center'>
               <Button
                 title='Edit profile & settings'
