@@ -8,7 +8,6 @@ import FullWidthImage from 'react-native-fullwidth-image'
 import { TextColor } from '../utility/Style'
 
 export default function StudyCard ({ navigation, study }) {
-  console.log(study.startDate, study.recruitEndDate)
   const startDate = new Date(`${study.startDate}T23:59:59Z`).toLocaleDateString("en-US")
   const recruitEndDate = new Date(`${study.recruitEndDate}T23:59:59Z`).toLocaleDateString("en-US")
   return (

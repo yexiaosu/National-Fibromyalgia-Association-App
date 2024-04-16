@@ -1,4 +1,4 @@
-import { firebaseConfig } from '../Secrets'
+import { firebaseConfig } from '../utility/ConstVariables'
 import {
   LOAD_STUDIES,
   LOAD_PROFILE,
