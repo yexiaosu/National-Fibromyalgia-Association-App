@@ -20,6 +20,7 @@ import Header from '../components/Header'
 import Button from '../components/Button'
 import { TextColor } from '../utility/Style'
 import { addStudyToHistory } from '../data/Actions'
+import Tag from '../components/Tag'
 
 export default function StudyDetailsScreen ({ route, navigation }) {
   const allStudies = useSelector(state => state.allStudies)
@@ -79,6 +80,20 @@ export default function StudyDetailsScreen ({ route, navigation }) {
                 Link to the survey
               </Text>
             )}
+            <View className='flex flex-row -ml-1 flex-wrap'>
+              {study.researchTopics.conditions &&
+                study.researchTopics.topics.map((tag, idx) => (
+                  <View key={idx} className='ml-1'>
+                    <Tag title={tag} />
+                  </View>
+                ))}
+              {study.researchTopics.conditions &&
+                study.researchTopics.conditions.map((tag, idx) => (
+                  <View key={idx} className='ml-1'>
+                    <Tag title={tag} />
+                  </View>
+                ))}
+            </View>
             <Text className='text-text text-sm font-light'>
               {study.description}
             </Text>
