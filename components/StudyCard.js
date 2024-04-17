@@ -63,7 +63,7 @@ export default function StudyCard ({ navigation, study }) {
             )}
             <View className='flex-row items-center space-x-1'>
               <MaterialIcons name='groups' size={22} color={TextColor} />
-              <Text className='text-text text-sm'>{study.participants}</Text>
+              <Text className='text-text text-sm'>{study.participants ? study.participants : 0}</Text>
             </View>
           </View>
           <View

@@ -154,14 +154,15 @@ const addStudyToHistory = (user, studyId, study) => {
   return async dispatch => {
     history = user.studyHistory ? [...user.studyHistory, studyId] : [studyId]
     await updateDoc(doc(db, 'Profile', user.uid), { studyHistory: history })
+    const currParticipants = study.participants ? study.participants + 1 : 1
     await updateDoc(doc(db, 'Studies', studyId), {
-      participants: study.participants + 1
+      participants: currParticipants
     })
     dispatch({
       type: UPDATE_HISTORY,
       payload: {
         user: { ...user, studyHistory: history },
-        study: { ...study, participants: study.participants + 1 }
+        study: { ...study, participants: currParticipants }
       }
     })
   }
