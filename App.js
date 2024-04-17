@@ -1,5 +1,8 @@
 import * as React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import {
+  NavigationContainer,
+  createNavigationContainerRef
+} from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { AntDesign } from '@expo/vector-icons'
@@ -39,12 +42,15 @@ function StackNavigator () {
   )
 }
 
-function TabNavigator () {
+function TabNavigator (props) {
+  const hide = props.routeName == 'Details'
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: PrimaryColor
+        tabBarActiveTintColor: PrimaryColor,
+        tabBarVisible: false,
+        tabBarStyle: { display: hide ? 'none' : 'flex', position: 'absolute' , bottom: hide ? -100 : 0 }
       }}
       initialRouteName='Home'
     >
@@ -92,12 +98,26 @@ function TabNavigator () {
   )
 }
 
+const ref = createNavigationContainerRef()
+
 export default function App () {
+  const [routeName, setRouteName] = React.useState()
+
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
-          <NavigationContainer>
+          <NavigationContainer
+            ref={ref}
+            onReady={() => {
+              setRouteName(ref.getCurrentRoute().name)
+            }}
+            onStateChange={async () => {
+              const previousRouteName = routeName
+              const currentRouteName = ref.getCurrentRoute().name
+              setRouteName(currentRouteName)
+            }}
+          >
             <Stack.Navigator initialRouteName='Auth'>
               <Stack.Screen
                 name='Auth'
@@ -106,9 +126,13 @@ export default function App () {
               />
               <Stack.Screen
                 name='Main'
-                component={TabNavigator}
-                options={{ headerShown: false, gestureEnabled: false }}
-              />
+                options={{
+                  headerShown: false,
+                  gestureEnabled: false
+                }}
+              >
+                {props => <TabNavigator {...props} routeName={routeName} />}
+              </Stack.Screen>
             </Stack.Navigator>
           </NavigationContainer>
         </BottomSheetModalProvider>
