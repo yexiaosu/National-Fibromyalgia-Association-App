@@ -43,7 +43,7 @@ function StackNavigator () {
 }
 
 function TabNavigator (props) {
-  const hide = props.routeName == 'Details'
+  const hide = props.routeName == 'Details' || props.routeName == 'SettingEdit'
   return (
     <Tab.Navigator
       screenOptions={{
