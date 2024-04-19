@@ -12,7 +12,8 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage'
 import { getApps, initializeApp } from 'firebase/app'
 
 import { subscribeToUserUpdates } from './data/Actions'
-import { firebaseConfig } from './utility/ConstVariables'
+// import { firebaseConfig } from './utility/ConstVariables'
+import { firebaseConfig } from './Secrets'
 
 let app, auth
 
