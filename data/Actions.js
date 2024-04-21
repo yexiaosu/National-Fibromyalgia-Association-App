@@ -120,7 +120,8 @@ const addUser = user => {
       isDiagnosed: user.isDiagnosed || '',
       visibility: user.visibility || '',
       firstName: user.firstName || '',
-      lastName: user.lastName || ''
+      lastName: user.lastName || '',
+      studyHistory: []
     }
     await setDoc(doc(db, 'Profile', user.uid), userToAdd)
   }
