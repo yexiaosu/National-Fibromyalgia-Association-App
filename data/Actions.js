@@ -29,7 +29,6 @@ const loadAllStudies = () => {
   return async dispatch => {
     let querySnapshot = await getDocs(collection(db, 'Studies'))
     let studies = querySnapshot.docs.map(docSnap => {
-      console.log(docSnap.data())
       const study = docSnap.data()
       const recruitEndDate = new Date(`${study.recruitEndDate}T23:59:59Z`)
       const studyEndDate = study.studyEndDate
