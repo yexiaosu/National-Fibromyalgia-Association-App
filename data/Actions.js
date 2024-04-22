@@ -121,7 +121,8 @@ const addUser = user => {
       visibility: user.visibility || '',
       firstName: user.firstName || '',
       lastName: user.lastName || '',
-      studyHistory: []
+      studyHistory: [],
+      identity: 'participant'
     }
     await setDoc(doc(db, 'Profile', user.uid), userToAdd)
   }
