@@ -37,7 +37,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
     ? new Date(`${study.studyEndDate}T23:59:59Z`).toLocaleDateString('en-US')
     : ''
   const today = new Date()
-  const [inFullscreen2, setInFullsreen2] = React.useState(false)
+  const [inFullscreen, setInFullscreen] = React.useState(false)
   const refVideo2 = React.useRef(null)
 
   const dispatch = useDispatch()
@@ -45,20 +45,20 @@ export default function StudyDetailsScreen ({ route, navigation }) {
   return (
     <SafeAreaView
       className={`flex-1 items-center justify-center ${
-        inFullscreen2 ? 'bg-black' : 'bg-background'
+        inFullscreen ? 'bg-black' : 'bg-background'
       }`}
     >
-      {!inFullscreen2 && (
+      {!inFullscreen && (
         <Header navigation={navigation} title={'Study Details'} />
       )}
       <ScrollView
         contentInsetAdjustmentBehavior='automatic'
-        className={`flex-1 flex-col ${inFullscreen2 ? 'w-full' : 'w-11/12'}`}
+        className={`flex-1 flex-col ${inFullscreen ? 'w-full' : 'w-11/12'}`}
         contentContainerStyle={{
           alignItems: 'center'
         }}
       >
-        {!inFullscreen2 && study.logoUri && (
+        {!inFullscreen && study.logoUri && (
           <View className='w-11/12 mt-4'>
             <FullWidthImage
               className='w-11/12'
@@ -66,7 +66,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
             />
           </View>
         )}
-        {!inFullscreen2 && (
+        {!inFullscreen && (
           <View className='w-11/12 mt-2'>
             <Text className='text-text text-xl font-medium'>{study.title}</Text>
             <Text className='text-text text-base mt-2'>
@@ -99,7 +99,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
             </Text>
           </View>
         )}
-        {!inFullscreen2 &&
+        {!inFullscreen &&
           (study.isActive ? (
             <>
               <AccordionItem title='Who can participate?'>
@@ -241,49 +241,52 @@ export default function StudyDetailsScreen ({ route, navigation }) {
               </View>
             </View>
           ))}
-        <View className={`${inFullscreen2 ? 'w-full' : 'w-11/12'} mt-4`}>
-          {!inFullscreen2 && (
-            <Text className='text-text text-lg'>Study's Video:</Text>
-          )}
-          <VideoPlayer
-            videoProps={{
-              shouldPlay: false,
-              resizeMode: ResizeMode.CONTAIN,
-              source: {
-                uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-              },
-              ref: refVideo2
-            }}
-            fullscreen={{
-              inFullscreen: inFullscreen2,
-              enterFullscreen: async () => {
-                setStatusBarHidden(true, 'fade')
-                setInFullsreen2(!inFullscreen2)
-                await ScreenOrientation.lockAsync(
-                  ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
-                )
-                refVideo2.current.setStatusAsync({
-                  shouldPlay: false
-                })
-              },
-              exitFullscreen: async () => {
-                setStatusBarHidden(false, 'fade')
-                setInFullsreen2(!inFullscreen2)
-                await ScreenOrientation.lockAsync(
-                  ScreenOrientation.OrientationLock.DEFAULT
-                )
-              }
-            }}
-            style={{
-              videoBackgroundColor: 'black',
-              height: inFullscreen2
-                ? Dimensions.get('window').width * 0.9
-                : 160,
-              width: inFullscreen2 ? Dimensions.get('window').height : 320
-            }}
-          />
-        </View>
-        {!inFullscreen2 && (
+        {study.videoUri && (
+          <View className={`${inFullscreen ? 'w-full' : 'w-11/12'} mt-4`}>
+            {!inFullscreen && (
+              <Text className='text-text text-lg'>Study's Video:</Text>
+            )}
+            <VideoPlayer
+              videoProps={{
+                shouldPlay: false,
+                resizeMode: ResizeMode.CONTAIN,
+                source: {
+                  uri: study.videoUri
+                },
+                ref: refVideo2
+              }}
+              fullscreen={{
+                inFullscreen: inFullscreen,
+                enterFullscreen: async () => {
+                  setStatusBarHidden(true, 'fade')
+                  setInFullscreen(!inFullscreen)
+                  await ScreenOrientation.lockAsync(
+                    ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
+                  )
+                  refVideo2.current.setStatusAsync({
+                    shouldPlay: false
+                  })
+                },
+                exitFullscreen: async () => {
+                  setStatusBarHidden(false, 'fade')
+                  setInFullscreen(!inFullscreen)
+                  await ScreenOrientation.lockAsync(
+                    ScreenOrientation.OrientationLock.DEFAULT
+                  )
+                }
+              }}
+              style={{
+                videoBackgroundColor: 'black',
+                height: inFullscreen
+                  ? Dimensions.get('window').width * 0.9
+                  : 160,
+                width: inFullscreen ? Dimensions.get('window').height : 320
+              }}
+            />
+          </View>
+        )}
+
+        {!inFullscreen && (
           <View className='w-11/12 mt-8 pb-8'>
             <Text className='text-text text-base font-medium'>
               For questions about this study, please contact:
