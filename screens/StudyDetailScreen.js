@@ -42,6 +42,16 @@ export default function StudyDetailsScreen ({ route, navigation }) {
 
   const dispatch = useDispatch()
 
+  const showInterest = (study) => {
+    study.additionalLinks && Linking.openURL(study.additionalLinks)
+    if (
+      !currentProfile.studyHistory ||
+      !currentProfile.studyHistory.includes(studyId)
+    ) {
+      dispatch(addStudyToHistory(currentProfile, studyId, study))
+    }
+  }
+
   return (
     <SafeAreaView
       className={`flex-1 items-center justify-center ${
@@ -75,7 +85,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
             {study.isActive && (
               <Text
                 className='text-primary text-sm underline'
-                onPress={() => Linking.openURL(study.additionalLinks)}
+                onPress={() => showInterest(study)}
               >
                 Link to the survey
               </Text>
@@ -183,15 +193,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
               </AccordionItem>
               <Button
                 title="I'm interested!"
-                onPress={() => {
-                  Linking.openURL(study.additionalLinks)
-                  if (
-                    !currentProfile.studyHistory ||
-                    !currentProfile.studyHistory.includes(studyId)
-                  ) {
-                    dispatch(addStudyToHistory(currentProfile, studyId, study))
-                  }
-                }}
+                onPress={() => showInterest(study)}
               />
             </>
           ) : (

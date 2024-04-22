@@ -146,7 +146,8 @@ export default function DashboardScreen ({ navigation }) {
             }
             return true
           })
-          .sort((a, b) => b - a)
+          .sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
+          .sort((a, b) => b.isActive - a.isActive)
           .map((study, idx) => (
             <StudyCard
               key={idx}
