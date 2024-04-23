@@ -142,10 +142,6 @@ export default function StudyDetailsScreen ({ route, navigation }) {
                 <Text className='text-text text-sm font-light'>
                   {study.compensation ? study.compensation : 'None'}
                 </Text>
-                <Text className='text-text text-base'>NFA compensation:</Text>
-                <Text className='text-text text-sm font-light'>
-                  {study.nfaCompensation ? study.nfaCompensation : 'None'}
-                </Text>
               </AccordionItem>
               <AccordionItem title='Additional Information'>
                 <Text className='text-text text-base'>IRB Number: </Text>
