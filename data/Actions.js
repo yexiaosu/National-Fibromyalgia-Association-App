@@ -29,8 +29,16 @@ const loadAllStudies = () => {
   return async dispatch => {
     let querySnapshot = await getDocs(collection(db, 'Studies'))
     let studies = querySnapshot.docs.map(docSnap => {
+      const study = docSnap.data()
+      const recruitEndDate = new Date(`${study.recruitEndDate}T23:59:59Z`)
+      const studyEndDate = study.studyEndDate
+        ? new Date(`${study.studyEndDate}T23:59:59Z`)
+        : null
+      const today = new Date()
       return {
         ...docSnap.data(),
+        isOngoing: studyEndDate ? (studyEndDate > today ? false : true) : true,
+        isActive: recruitEndDate > today ? true : false,
         key: docSnap.id
       }
     })
@@ -120,7 +128,9 @@ const addUser = user => {
       isDiagnosed: user.isDiagnosed || '',
       visibility: user.visibility || '',
       firstName: user.firstName || '',
-      lastName: user.lastName || ''
+      lastName: user.lastName || '',
+      studyHistory: [],
+      identity: 'participant'
     }
     await setDoc(doc(db, 'Profile', user.uid), userToAdd)
   }

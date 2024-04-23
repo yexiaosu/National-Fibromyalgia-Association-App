@@ -30,13 +30,16 @@ export default function HistoryScreen ({ navigation }) {
           alignItems: 'center'
         }}
       >
-        {history.map((study, idx) => (
-          <StudyCard
-            key={idx}
-            navigation={navigation}
-            study={study}
-          ></StudyCard>
-        ))}
+        {history
+          .sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
+          .sort((a, b) => b.isActive - a.isActive)
+          .map((study, idx) => (
+            <StudyCard
+              key={idx}
+              navigation={navigation}
+              study={study}
+            ></StudyCard>
+          ))}
         <Text className='text-text font-extralight mt-4 mb-8'>
           No more studies...
         </Text>
