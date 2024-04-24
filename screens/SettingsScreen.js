@@ -121,7 +121,7 @@ export default function SettingsScreen({ navigation }) {
               </View>
             </View>
 
-            <View className='pb-8 w-3/4 self-center'>
+            <View className='pb-8 w-3/4 mb-8 self-center'>
               <Button
                 title='Edit profile & settings'
                 onPress={() =>
