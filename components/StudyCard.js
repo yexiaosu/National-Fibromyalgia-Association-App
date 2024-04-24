@@ -25,11 +25,11 @@ export default function StudyCard ({ navigation, study }) {
       }
     >
       {study.logoUri && (
-        <View className='w-11/12'>
+        <View className='w-11/12 mb-4'>
           <FullWidthImage className='w-11/12' source={{ uri: study.logoUri }} />
         </View>
       )}
-      <View className='flex-col justify-center items-begin w-11/12 mt-4'>
+      <View className='flex-col justify-center items-begin w-11/12'>
         <Text className='text-text text-base text-wrap'>
           {study.title ? study.title : 'No title'}
         </Text>
@@ -50,7 +50,7 @@ export default function StudyCard ({ navigation, study }) {
               </View>
             ))}
         </View>
-        <View className='flex-row justify-between items-center mt-1'>
+        <View className='flex-row justify-between items-center mt-2'>
           <View className='flex-row items-center space-x-4'>
             {study.isOngoing ? (
               <MaterialCommunityIcons

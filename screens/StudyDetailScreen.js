@@ -42,7 +42,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
 
   const dispatch = useDispatch()
 
-  const showInterest = (study) => {
+  const showInterest = study => {
     study.additionalLinks && Linking.openURL(study.additionalLinks)
     if (
       !currentProfile.studyHistory ||
@@ -79,9 +79,9 @@ export default function StudyDetailsScreen ({ route, navigation }) {
         {!inFullscreen && (
           <View className='w-11/12 mt-2'>
             <Text className='text-text text-xl font-medium'>{study.title}</Text>
-            <Text className='text-text text-base mt-2'>
+            {study.researchers && <Text className='text-text text-base mt-2'>
               {study.researchers}
-            </Text>
+            </Text>}
             {study.isActive && (
               <Text
                 className='text-primary text-sm underline'
@@ -104,7 +104,7 @@ export default function StudyDetailsScreen ({ route, navigation }) {
                   </View>
                 ))}
             </View>
-            <Text className='text-text text-sm font-light'>
+            <Text className='text-text text-sm font-light mt-2'>
               {study.description}
             </Text>
           </View>
@@ -292,15 +292,17 @@ export default function StudyDetailsScreen ({ route, navigation }) {
             <Text className='text-text text-base mt-2'>
               {study.contactName}
             </Text>
-            <View className='flex flex-row w-full items-center mt-2'>
-              <Ionicons name='call-outline' size={22} color={TextColor} />
-              <Text
-                className='text-primary underline text-sm font-light ml-2'
-                onPress={() => Linking.openURL(`tel:${study.contactPhone}`)}
-              >
-                {study.contactPhone}
-              </Text>
-            </View>
+            {study.contactPhone && (
+              <View className='flex flex-row w-full items-center mt-2'>
+                <Ionicons name='call-outline' size={22} color={TextColor} />
+                <Text
+                  className='text-primary underline text-sm font-light ml-2'
+                  onPress={() => Linking.openURL(`tel:${study.contactPhone}`)}
+                >
+                  {study.contactPhone}
+                </Text>
+              </View>
+            )}
             <View className='flex flex-row w-full items-center mt-2'>
               <Ionicons name='mail-outline' size={22} color={TextColor} />
               <Text
